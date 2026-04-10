@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ep–40 riddim — cheatsheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
+  :root {
+    --p:  #00503a;
+    --pd: #003c30;
+    --pb: #dbd0b9;
+    --pt: #ede8dd;
+    --pl: #e5dece;
+    --g:  #6b6866;
+    --bk: #0f0e12;
+    --wh: #ffffff;
+    --or: #ff681d;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 7.5pt;
+    color: var(--bk);
+    background: var(--wh);
+    line-height: 1.4;
+  }
+
+  @page { size: letter landscape; margin: 10mm 12mm; }
+
+  .page { display: block; width: 100%; }
+
+  .col-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .c25 { flex: 1;    min-width: 0; }
+  .c33 { flex: 1.33; min-width: 0; }
+  .c50 { flex: 2;    min-width: 0; }
+
+  .section {
+    display: block;
+    width: 100%;
+    background: var(--wh);
+    border: 1px solid var(--pb);
+    border-radius: 2px;
+    margin-bottom: 6px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .sh {
+    background: var(--p);
+    color: var(--wh);
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 6px;
+  }
+  .sh.or { background: var(--or); }
+  .sh.lt { background: var(--pt); color: var(--p); }
+  .sb { padding: 4px 6px; }
+
+  .hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--p);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .hdr-t { font-size: 18pt; font-weight: 600; color: var(--p); letter-spacing: -0.5px; line-height: 1; }
+  .hdr-s { font-size: 7pt; color: var(--g); letter-spacing: 1px; text-transform: uppercase; }
+  .hdr-r { font-size: 6.5pt; color: var(--g); text-align: right; }
+
+  .ftr {
+    margin-top: 5px;
+    border-top: 1px solid var(--pb);
+    padding-top: 3px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 6pt;
+    color: var(--g);
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 7pt; table-layout: fixed; }
+  td, th { padding: 1.5px 4px; vertical-align: top; border-bottom: 1px solid var(--pl); overflow-wrap: break-word; word-break: break-word; }
+  tr:last-child td { border-bottom: none; }
+  th {
+    color: var(--p); font-weight: 600; font-size: 6pt;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    background: var(--pt); border-bottom: 1px solid var(--pb);
+  }
+  td:first-child { color: var(--p); font-weight: 500; white-space: nowrap; padding-right: 5px; }
+
+  kbd {
+    display: inline-block;
+    background: var(--pt); border: 1px solid var(--pb); border-radius: 2px;
+    padding: 0 3px; font-size: 6.5pt; font-family: inherit;
+    color: var(--pd); font-weight: 600; line-height: 1.5; white-space: nowrap;
+  }
+  kbd.or { background: var(--or); border-color: #d45010; color: white; }
+
+  .note {
+    background: var(--pt); border-left: 2px solid var(--or);
+    padding: 3px 5px; font-size: 6.5pt; color: var(--g); margin-top: 3px;
+  }
+
+  .sl { list-style: none; }
+  .sl li { display: flex; justify-content: space-between; padding: 1.5px 0; border-bottom: 1px solid var(--pl); font-size: 6.5pt; gap: 6px; }
+  .sl li:last-child { border-bottom: none; }
+  .sl .k { color: var(--g); }
+  .sl .v { font-weight: 500; text-align: right; }
+
+  h4 {
+    font-size: 6.5pt; font-weight: 600; color: var(--p);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin: 4px 0 2px; break-after: avoid; page-break-after: avoid;
+  }
+  h4:first-child { margin-top: 0; }
+
+  /* Knob map rows — flex-based, no grid */
+  .kr {
+    display: flex;
+    font-size: 6.5pt;
+    border-bottom: 1px solid var(--pl);
+    padding: 1.5px 0;
+  }
+  .kr:last-child { border-bottom: none; }
+  .km { flex: 1.2; color: var(--g); font-size: 6pt; }
+  .kx { flex: 1; color: var(--p); }
+  .ky { flex: 1; color: var(--or); }
+
+  /* Effects cards — 2-up flex */
+  .fx-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 2px 0;
+  }
+  .fx-card {
+    flex: 0 0 calc(50% - 2px);
+    border: 1px solid var(--pb);
+    border-radius: 2px;
+    padding: 2px 4px;
+  }
+  .fx-name {
+    font-size: 6.5pt; font-weight: 600; color: var(--p);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1px;
+  }
+  .fx-p {
+    font-size: 5.5pt; color: var(--bk);
+    display: flex; gap: 2px; align-items: baseline; line-height: 1.5;
+  }
+  .fk {
+    font-size: 5pt; font-weight: 600; color: white;
+    background: var(--p); border-radius: 1px;
+    padding: 0 2px; flex-shrink: 0;
+  }
+  .fk.y { background: var(--or); }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">ep–40 riddim</div>
+      <div class="hdr-s">quick reference cheatsheet</div>
+    </div>
+    <div class="hdr-r">128mb sampler &amp; composer · teenage.engineering</div>
+  </div>
+
+  <div class="col-row">
+
+    <!-- COL 1: Hardware Controls -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">hardware controls</div>
+        <div class="sb">
+          <table>
+            <tr><th>control</th><th>function</th></tr>
+            <tr><td>group A–D</td><td>4 groups × 99 patterns × 12 sounds</td></tr>
+            <tr><td>pads 1–12</td><td>trigger sounds / number input</td></tr>
+            <tr><td>− / +</td><td>navigate &amp; adjust values</td></tr>
+            <tr><td>shift</td><td>secondary functions on all buttons</td></tr>
+            <tr><td>fader</td><td>group volume (reassignable)</td></tr>
+            <tr><td>knob X</td><td>param 1 (context-dependent)</td></tr>
+            <tr><td>knob Y</td><td>param 2 (context-dependent)</td></tr>
+            <tr><td>timing</td><td>note interval 1/1–1/32 + swing</td></tr>
+            <tr><td>sample</td><td>enter sampler / record audio</td></tr>
+            <tr><td>sound</td><td>browse &amp; assign sounds</td></tr>
+            <tr><td>main</td><td>home / scene / pattern view</td></tr>
+            <tr><td>fx</td><td>effects</td></tr>
+            <tr><td>tempo</td><td>BPM (40–399), metronome vol</td></tr>
+            <tr><td>record</td><td>arm recording</td></tr>
+            <tr><td>play</td><td>start / stop</td></tr>
+            <tr><td>eraser</td><td>delete notes / system settings</td></tr>
+            <tr><td>keys</td><td>chromatic keyboard on pads</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 2: Shift Combos -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">shift combos</div>
+        <div class="sb">
+          <table>
+            <tr><th>combo</th><th>action</th></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>grp A</kbd></td><td>new pattern</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>grp B</kbd></td><td>undo</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>grp C</kbd></td><td>copy bar (×2 = full pattern)</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>grp D</kbd></td><td>paste</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>main</kbd></td><td>commit scene</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>sound</kbd></td><td>sound edit</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>sound</kbd> 2s</td><td>save sound edits</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>sample</kbd></td><td>chop mode</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>timing</kbd></td><td>timing correct</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>fx</kbd></td><td>master compressor / output</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>eraser</kbd></td><td>system settings</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>play</kbd></td><td>play from start</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>fader</kbd></td><td>reset fader (RES)</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>−/+</kbd></td><td>navigate bars in pattern</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>pad</kbd></td><td>(step seq) velocity/duration via knobs</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>knob</kbd></td><td>fine / slow adjustment</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>pad</kbd> (sample)</td><td>hands-free sampling</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3: Knob Map -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">knob X / Y map by mode</div>
+        <div class="sb">
+          <div style="display:flex; font-size:5.5pt; margin-bottom:3px;">
+            <span style="flex:1.2; color:var(--g); text-transform:uppercase; letter-spacing:.5px;">mode</span>
+            <span style="flex:1; color:var(--p); font-weight:600;">X</span>
+            <span style="flex:1; color:var(--or); font-weight:600;">Y</span>
+          </div>
+          <div class="kr"><span class="km">sound</span><span class="kx">volume (AMP)</span><span class="ky">pitch (PTC)</span></div>
+          <div class="kr"><span class="km">edit: sound</span><span class="kx">play mode</span><span class="ky">pan</span></div>
+          <div class="kr"><span class="km">edit: trim</span><span class="kx">start point</span><span class="ky">length</span></div>
+          <div class="kr"><span class="km">edit: supertone</span><span class="kx">param 1</span><span class="ky">param 2</span></div>
+          <div class="kr"><span class="km">edit: envelope</span><span class="kx">attack</span><span class="ky">release</span></div>
+          <div class="kr"><span class="km">edit: time</span><span class="kx">stretch mode</span><span class="ky">tempo/bars</span></div>
+          <div class="kr"><span class="km">edit: midi</span><span class="kx">channel (1–16)</span><span class="ky">root note</span></div>
+          <div class="kr"><span class="km">tempo</span><span class="kx">BPM (40–399)</span><span class="ky">metro volume</span></div>
+          <div class="kr"><span class="km">timing</span><span class="kx">note interval</span><span class="ky">swing</span></div>
+          <div class="kr"><span class="km">main</span><span class="kx">input volume</span><span class="ky">route thru FX</span></div>
+          <div class="kr"><span class="km">sampling</span><span class="kx">input level</span><span class="ky">threshold</span></div>
+          <div class="kr"><span class="km">chop</span><span class="kx">in point</span><span class="ky">out point</span></div>
+          <div class="kr"><span class="km">loop</span><span class="kx">loop length</span><span class="ky">slide position</span></div>
+          <div class="kr"><span class="km">timing correct</span><span class="kx">note interval</span><span class="ky">swing</span></div>
+          <div class="kr"><span class="km">step seq (⇧+pad)</span><span class="kx">velocity</span><span class="ky">duration</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 4: Record & Sequencing -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">record &amp; sequencing</div>
+        <div class="sb">
+          <h4>live record</h4>
+          <table>
+            <tr><td><kbd>rec</kbd> → <kbd>play</kbd></td><td>4-beat count-in, then record</td></tr>
+            <tr><td><kbd>rec</kbd>+<kbd>play</kbd></td><td>record immediately (no count-in)</td></tr>
+            <tr><td><kbd>rec</kbd>+<kbd>−/+</kbd></td><td>change pattern length (up to 99 bars)</td></tr>
+            <tr><td><kbd>rec</kbd>+<kbd>pad</kbd></td><td>hold to record fader automation</td></tr>
+          </table>
+          <h4>step sequencer</h4>
+          <table>
+            <tr><td><kbd>−/+</kbd></td><td>navigate steps (when stopped)</td></tr>
+            <tr><td><kbd>rec</kbd>+<kbd>pad</kbd></td><td>record note to current step</td></tr>
+            <tr><td><kbd>era</kbd>+<kbd>pad</kbd></td><td>erase note(s) on pad</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>pad</kbd>+<kbd>−/+</kbd></td><td>nudge note timing</td></tr>
+          </table>
+          <h4>erase</h4>
+          <table>
+            <tr><td><kbd>era</kbd>+<kbd>pad</kbd> (hold)</td><td>erase all notes on pad (TRK)</td></tr>
+            <tr><td><kbd>era</kbd>+<kbd>grp</kbd></td><td>erase pattern (PTN)</td></tr>
+            <tr><td><kbd>era</kbd>+<kbd>fader</kbd></td><td>erase fader automation (FDR)</td></tr>
+            <tr><td><kbd>era</kbd>+<kbd>sound</kbd></td><td>permanently delete sample</td></tr>
+          </table>
+          <h4>copy / paste</h4>
+          <table>
+            <tr><td><kbd>⇧</kbd>+<kbd>C</kbd> ×1</td><td>copy current bar</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>C</kbd> ×2</td><td>copy full pattern</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>D</kbd></td><td>paste</td></tr>
+          </table>
+          <div class="note">intervals: 1/1 · 1/2 · 1/4 · 1/8 · 1/8T · 1/16 · 1/16T · 1/32 · hold <kbd>timing</kbd>+<kbd>pad</kbd> = note repeat</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ftr">
+    <span>ep–40 riddim cheatsheet · page 1 of 2</span>
+    <span>teenage.engineering/guides/ep-40</span>
+  </div>
+
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+
+  <div class="hdr" style="break-before:page; page-break-before:always;">
+    <div>
+      <div class="hdr-t">ep–40 riddim</div>
+      <div class="hdr-s">modes · sampling · effects · connectivity</div>
+    </div>
+    <div class="hdr-r">page 2 of 2</div>
+  </div>
+
+  <div class="col-row">
+
+    <!-- COL 1: Modes -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">sound mode</div>
+        <div class="sb">
+          <table>
+            <tr><td><kbd>−/+</kbd></td><td>browse sounds (1–999)</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>−/+</kbd></td><td>jump by 10</td></tr>
+            <tr><td>hold <kbd>sound</kbd>+pad</td><td>direct number entry</td></tr>
+            <tr><td>hold <kbd>sound</kbd>+<kbd>•</kbd></td><td>supertone sounds (0–9)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">sound edit — <kbd>⇧</kbd>+<kbd>sound</kbd></div>
+        <div class="sb">
+          <table>
+            <tr><th>submode</th><th>knobX · knobY</th></tr>
+            <tr><td>sound</td><td>play mode · pan</td></tr>
+            <tr><td>trim</td><td>start point · length</td></tr>
+            <tr><td>supertone</td><td>param 1 · param 2</td></tr>
+            <tr><td>envelope</td><td>attack · release</td></tr>
+            <tr><td>time</td><td>stretch mode · target tempo/bars</td></tr>
+            <tr><td>midi</td><td>channel (1–16) · root note</td></tr>
+            <tr><td>mute grp</td><td>assign pads to choke groups</td></tr>
+          </table>
+          <div class="note">play modes: one-shot · key (poly) · legato · loop (bg sync)</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">tempo &amp; keys</div>
+        <div class="sb">
+          <table>
+            <tr><td><kbd>main</kbd>+<kbd>tempo</kbd></td><td>time signature</td></tr>
+            <tr><td><kbd>sample</kbd>+<kbd>tempo</kbd></td><td>tempo match (auto-detect BPM)</td></tr>
+            <tr><td><kbd>keys</kbd>+<kbd>−/+</kbd></td><td>octave up / down</td></tr>
+            <tr><td><kbd>keys</kbd>+<kbd>pad</kbd></td><td>transpose scale</td></tr>
+          </table>
+          <div class="note">scales: 12T · maj · min · dor · phr · lyd · mix · loc · ma.p · mi.p</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 2: Main Mode + Sampling -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">main mode &amp; song</div>
+        <div class="sb">
+          <h4>scene &amp; pattern</h4>
+          <table>
+            <tr><td><kbd>main</kbd>+<kbd>−/+</kbd></td><td>switch scenes</td></tr>
+            <tr><td><kbd>main</kbd>+<kbd>1–9</kbd></td><td>quick select scene</td></tr>
+            <tr><td><kbd>grp</kbd>+<kbd>−/+</kbd></td><td>change pattern for group</td></tr>
+            <tr><td><kbd>grp</kbd>+<kbd>1–9</kbd></td><td>quick select pattern</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>main</kbd></td><td>commit (duplicate scene)</td></tr>
+            <tr><td>hold <kbd>main</kbd>+<kbd>1–9</kbd></td><td>switch projects (9 max)</td></tr>
+          </table>
+          <div class="note">song list: hold <kbd>main</kbd>+enter · <kbd>⇧</kbd>+A=append · <kbd>⇧</kbd>+C=cut · <kbd>⇧</kbd>+D=insert · <kbd>⇧</kbd>+−/+=swap</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">sampling — <kbd>sample</kbd></div>
+        <div class="sb">
+          <table>
+            <tr><th>source (−/+ to switch)</th><th></th></tr>
+            <tr><td>hold <kbd>pad</kbd></td><td>record to that pad</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>pad</kbd></td><td>hands-free record</td></tr>
+            <tr><td><kbd>⇧</kbd>+<kbd>pad</kbd>→<kbd>play</kbd></td><td>resample pattern length</td></tr>
+            <tr><td>hold <kbd>sound</kbd>+num</td><td>select destination slot</td></tr>
+          </table>
+          <h4>chop — <kbd>⇧</kbd>+<kbd>sample</kbd></h4>
+          <table>
+            <tr><td>auto chop</td><td>select group → −/+ slice count</td></tr>
+            <tr><td>live chop</td><td>press pads as sample plays</td></tr>
+            <tr><td>refine</td><td>pad + knob X/Y = in/out points</td></tr>
+          </table>
+          <h4>loop — <kbd>⇧</kbd>+<kbd>tempo</kbd></h4>
+          <table>
+            <tr><td>knob X / Y</td><td>loop length / slide position</td></tr>
+            <tr><td><kbd>tempo</kbd> / <kbd>main</kbd></td><td>exit immediately / next bar</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3: Effects -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh or">effects (fx)</div>
+        <div class="sb">
+          <div class="fx-grid">
+            <div class="fx-card">
+              <div class="fx-name">delay</div>
+              <div class="fx-p"><span class="fk">X</span> length</div>
+              <div class="fx-p"><span class="fk y">Y</span> feedback</div>
+            </div>
+            <div class="fx-card">
+              <div class="fx-name">reverb</div>
+              <div class="fx-p"><span class="fk">X</span> room size</div>
+              <div class="fx-p"><span class="fk y">Y</span> colour</div>
+            </div>
+            <div class="fx-card">
+              <div class="fx-name">distortion</div>
+              <div class="fx-p"><span class="fk">X</span> drive</div>
+              <div class="fx-p"><span class="fk y">Y</span> color (filter)</div>
+            </div>
+            <div class="fx-card">
+              <div class="fx-name">chorus</div>
+              <div class="fx-p"><span class="fk">X</span> mod rate</div>
+              <div class="fx-p"><span class="fk y">Y</span> feedback</div>
+            </div>
+            <div class="fx-card">
+              <div class="fx-name">filter</div>
+              <div class="fx-p"><span class="fk">X</span> cutoff</div>
+              <div class="fx-p"><span class="fk y">Y</span> resonance</div>
+            </div>
+            <div class="fx-card">
+              <div class="fx-name">compressor</div>
+              <div class="fx-p"><span class="fk">X</span> drive</div>
+              <div class="fx-p"><span class="fk y">Y</span> speed</div>
+            </div>
+            <div class="fx-card">
+              <div class="fx-name">phaser</div>
+              <div class="fx-p"><span class="fk">X</span> mod rate</div>
+              <div class="fx-p"><span class="fk y">Y</span> feedback</div>
+            </div>
+            <div class="fx-card" style="border-color:#d45010;">
+              <div class="fx-name" style="color:var(--or);">punch-in 2.0™</div>
+              <div class="fx-p" style="color:var(--g); font-size:5pt;">hold <kbd>fx</kbd>+pads · pressure-sensitive · combinable</div>
+            </div>
+          </div>
+          <table style="margin-top:4px;">
+            <tr><th>master — <kbd>⇧</kbd>+<kbd>fx</kbd></th><th>sidechain</th></tr>
+            <tr><td>X: drive · Y: speed</td><td>X: duck length · Y: shape</td></tr>
+          </table>
+          <div class="note">browse: −/+ · live input FX: processes ext. audio through riddim's fx chain</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 4: I/O + System + Specs -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">i/o &amp; connectivity</div>
+        <div class="sb">
+          <table>
+            <tr><th>port</th><th>type / use</th></tr>
+            <tr><td>audio in/out</td><td>3.5mm stereo · in: 6.5kΩ · 0–12 dB gain</td></tr>
+            <tr><td>MIDI in/out</td><td>3.5mm TRS-A · opto-coupled · MMA</td></tr>
+            <tr><td>USB-C</td><td>MIDI · firmware · sample transfer</td></tr>
+          </table>
+          <h4>sync modes</h4>
+          <table>
+            <tr><td>dual 1/8</td><td>TIP+RING → 2× Pocket Operators via splitter</td></tr>
+            <tr><td>1/16</td><td>eurorack · EP series compatible</td></tr>
+            <tr><td>sync24</td><td>vintage drum machines (NOT standard MIDI cables)</td></tr>
+          </table>
+          <div class="note">to PO: riddim out → PO in · sys OUT=8 · PO: SY1<br>from PO: PO out → riddim in · sys IN=8 · PO: SY1</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">system settings — <kbd>⇧</kbd>+<kbd>eraser</kbd></div>
+        <div class="sb">
+          <table>
+            <tr><th>range</th><th>section</th></tr>
+            <tr><td>100–141</td><td>MIDI (clock · channel · thru · prog change)</td></tr>
+            <tr><td>200–212</td><td>sync (in/out: 8th / 16th / sync24)</td></tr>
+            <tr><td>300–340</td><td>pad (velocity · scale · key · audition)</td></tr>
+            <tr><td>400–421</td><td>sequencer (metro · scene sync · quick select)</td></tr>
+            <tr><td>900–937</td><td>live mode (disable up to 18 controls)</td></tr>
+          </table>
+          <div class="note">128 MB · 999 slots · 40–399 BPM · 96 ppqn · 9 projects · 4 × AAA</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ftr">
+    <span>ep–40 riddim cheatsheet · page 2 of 2</span>
+    <span>teenage.engineering/guides/ep-40 · condensed reference — not a substitute for the full guide</span>
+  </div>
+
+</div>
+
+</body>
+</html>

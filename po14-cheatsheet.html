@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>po–14 submarine — cheatsheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
+  :root {
+    --p:  #005fa0;
+    --pd: #004578;
+    --pb: #80b8dd;
+    --pt: #e8f3fa;
+    --pl: #b8d8f0;
+    --g:  #6b6b6b;
+    --bk: #1a1a1a;
+    --wh: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 7.5pt;
+    color: var(--bk);
+    background: var(--wh);
+    line-height: 1.4;
+  }
+
+  @page { size: letter landscape; margin: 10mm 12mm; }
+
+  .page { display: block; width: 100%; }
+
+  .col-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .c25 { flex: 1;    min-width: 0; }
+  .c50 { flex: 2;    min-width: 0; }
+
+  /* SECTION */
+  .section {
+    display: block;
+    width: 100%;
+    background: var(--wh);
+    border: 1px solid var(--pb);
+    border-radius: 2px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .sh {
+    background: var(--p);
+    color: var(--wh);
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 6px;
+  }
+  .sh.lt { background: var(--pt); color: var(--p); }
+  .sb { padding: 4px 6px; }
+
+  /* HEADER */
+  .hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--p);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .hdr-t { font-size: 18pt; font-weight: 600; color: var(--p); letter-spacing: -0.5px; line-height: 1; }
+  .hdr-s { font-size: 7pt; color: var(--g); letter-spacing: 1px; text-transform: uppercase; }
+  .hdr-r { font-size: 6.5pt; color: var(--g); text-align: right; }
+
+  /* FOOTER */
+  .ftr {
+    margin-top: 5px;
+    border-top: 1px solid var(--pb);
+    padding-top: 3px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 6pt;
+    color: var(--g);
+  }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 7pt; table-layout: fixed; }
+  td, th { padding: 1.5px 4px; vertical-align: top; border-bottom: 1px solid var(--pl); overflow-wrap: break-word; word-break: break-word; }
+  tr:last-child td { border-bottom: none; }
+  th {
+    color: var(--p); font-weight: 600; font-size: 6pt;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    background: var(--pt); border-bottom: 1px solid var(--pb);
+  }
+  td:first-child { color: var(--p); font-weight: 500; white-space: nowrap; padding-right: 5px; }
+
+  /* KBD */
+  kbd {
+    display: inline-block;
+    background: var(--pt); border: 1px solid var(--pb); border-radius: 2px;
+    padding: 0 3px; font-size: 6.5pt; font-family: inherit;
+    color: var(--pd); font-weight: 600; line-height: 1.5; white-space: nowrap;
+  }
+
+  /* NOTE */
+  .note {
+    background: var(--pt); border-left: 2px solid var(--p);
+    padding: 3px 5px; font-size: 6.5pt; color: var(--g); margin-top: 3px;
+  }
+
+  /* SPEC LIST */
+  .sl { list-style: none; }
+  .sl li {
+    display: flex; justify-content: space-between;
+    padding: 1.5px 0; border-bottom: 1px solid var(--pl);
+    font-size: 6.5pt; gap: 6px;
+  }
+  .sl li:last-child { border-bottom: none; }
+  .sl .k { color: var(--g); }
+  .sl .v { font-weight: 500; text-align: right; }
+
+  /* H4 */
+  h4 {
+    font-size: 6.5pt; font-weight: 600; color: var(--p);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin: 4px 0 2px; break-after: avoid; page-break-after: avoid;
+  }
+  h4:first-child { margin-top: 0; }
+
+  .sm { font-size: 6pt; color: var(--g); }
+
+  /* KEY GRIDS */
+  .kg4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2px; padding: 3px 5px;
+  }
+  .kc {
+    border: 1px solid var(--pb); border-radius: 2px; padding: 2px 3px;
+    text-align: center; min-width: 0; overflow: hidden;
+  }
+  .kn { font-size: 5pt; color: var(--p); font-weight: 600; display: block; line-height: 1.2; }
+  .kl { font-size: 5.5pt; color: var(--bk); display: block; line-height: 1.3; }
+
+  /* BPM PILLS */
+  .bpmrow { display: flex; gap: 3px; padding: 2px 0; }
+  .bpmp {
+    flex: 1; text-align: center; background: var(--p); color: white;
+    border-radius: 2px; padding: 2px 3px; font-size: 6pt; font-weight: 600;
+  }
+  .bpml { font-size: 4.5pt; opacity: 0.85; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+  .bpmv { font-size: 7.5pt; font-weight: 600; display: block; line-height: 1.2; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ PAGE 1 ═══════════════ -->
+<div class="page">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">po–14 submarine</div>
+      <div class="hdr-s">quick reference cheatsheet</div>
+    </div>
+    <div class="hdr-r">pocket operator · teenage.engineering</div>
+  </div>
+
+  <div class="col-row">
+
+    <!-- COL 1: Controls + Tempo -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">hardware controls</div>
+        <div class="sb">
+          <table>
+            <tr><th>control</th><th>function</th></tr>
+            <tr><td>keys 1–16</td><td>sounds / patterns / fx / steps / volume</td></tr>
+            <tr><td>knob A</td><td>param 1 / swing / hours (context)</td></tr>
+            <tr><td>knob B</td><td>param 2 / tempo / minutes (context)</td></tr>
+            <tr><td>sound</td><td>hold + key to select synth / drum</td></tr>
+            <tr><td>pattern</td><td>hold + key to select / chain</td></tr>
+            <tr><td>fx</td><td>hold + key to toggle effect</td></tr>
+            <tr><td>bpm</td><td>cycle presets; hold + knobs to fine-tune</td></tr>
+            <tr><td>write</td><td>enter write / record mode</td></tr>
+            <tr><td>key</td><td>hold + keys for play styles / chords</td></tr>
+            <tr><td>play/stop</td><td>start and stop sequencer</td></tr>
+          </table>
+          <h4>sound parameters</h4>
+          <table>
+            <tr><td>knob A</td><td>param 1 (pitch / tone / character)</td></tr>
+            <tr><td>knob B</td><td>param 2 (decay / color / texture)</td></tr>
+          </table>
+          <div class="note">per-step parameter locking supported</div>
+          <h4>tempo</h4>
+          <div class="bpmrow">
+            <div class="bpmp"><span class="bpml">hip hop</span><span class="bpmv">80</span></div>
+            <div class="bpmp"><span class="bpml">disco</span><span class="bpmv">120</span></div>
+            <div class="bpmp"><span class="bpml">techno</span><span class="bpmv">140</span></div>
+          </div>
+          <div class="note" style="margin-top:3px;">
+            hold <kbd>bpm</kbd>+knob B = fine-tune (60–240 BPM)<br>
+            hold <kbd>bpm</kbd>+knob A = swing<br>
+            hold <kbd>bpm</kbd>+1–16 = volume (caution &gt;5 w/ headphones)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 2: Sounds + KEY play styles -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">sounds (hold sound + key)</div>
+        <div class="sb">
+          <h4>synth engines (sounds 1–15)</h4>
+          <table>
+            <tr><td>sounds 1–15</td><td>bass synthesis engines: FM, phase distortion, wavetable, physical modeled string and variations</td></tr>
+            <tr><td>knob A</td><td>set pitch / character per engine</td></tr>
+            <tr><td>knob B</td><td>set decay / timbre per engine</td></tr>
+          </table>
+          <div class="note">15 distinct bass synth algorithms — each engine has unique tonal character shaped by knobs A and B</div>
+          <h4>sound 16 — micro drum kit</h4>
+          <table>
+            <tr><td>hold <kbd>sound</kbd>+16</td><td>select drum kit mode</td></tr>
+            <tr><td>hold lit step+knob A (write)</td><td>select drum (1–16 voices)</td></tr>
+            <tr><td>knob B</td><td>decay / tone of selected drum</td></tr>
+          </table>
+          <div class="note">drum kit fills 16 drum/perc voices within a single pattern step</div>
+          <h4>KEY — play styles</h4>
+          <table>
+            <tr><td>hold <kbd>key</kbd>+1–16</td><td>punch in chord / arpeggio / transposition</td></tr>
+            <tr><td>hold <kbd>key</kbd> (no press)</td><td>clear current play style</td></tr>
+            <tr><td><kbd>key</kbd>+<kbd>bpm</kbd></td><td>toggle sync mode (SY0–SY5)</td></tr>
+            <tr><td>hold <kbd>key</kbd>+knobs (write)</td><td>parameter lock for play style</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3: Effects -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">effects (hold fx + key)</div>
+        <div class="kg4">
+          <div class="kc"><span class="kn">1</span><span class="kl">Lo Sample Rate</span></div>
+          <div class="kc"><span class="kn">2</span><span class="kl">Distortion</span></div>
+          <div class="kc"><span class="kn">3</span><span class="kl">Bit Crush</span></div>
+          <div class="kc"><span class="kn">4</span><span class="kl">Delay</span></div>
+          <div class="kc"><span class="kn">5</span><span class="kl">LP Filter</span></div>
+          <div class="kc"><span class="kn">6</span><span class="kl">LP Sweep</span></div>
+          <div class="kc"><span class="kn">7</span><span class="kl">HP Filter</span></div>
+          <div class="kc"><span class="kn">8</span><span class="kl">HP Sweep</span></div>
+          <div class="kc"><span class="kn">9</span><span class="kl">Stutter 4</span></div>
+          <div class="kc"><span class="kn">10</span><span class="kl">Stutter 3</span></div>
+          <div class="kc"><span class="kn">11</span><span class="kl">Feedback</span></div>
+          <div class="kc"><span class="kn">12</span><span class="kl">Param LFO</span></div>
+          <div class="kc"><span class="kn">13</span><span class="kl">Octave Up</span></div>
+          <div class="kc"><span class="kn">14</span><span class="kl">Octave Down</span></div>
+          <div class="kc"><span class="kn">15</span><span class="kl">Half Note Up</span></div>
+          <div class="kc"><span class="kn">16</span><span class="kl">Vibrato</span></div>
+        </div>
+        <div class="note" style="margin:3px 5px 3px;">
+          hold <kbd>fx</kbd> alone = clear all effects<br>
+          <kbd>fx</kbd>+<kbd>play</kbd> = fade out &amp; stop<br>
+          some effects are mutually exclusive
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 4: Sequencer -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">sequencer &amp; recording</div>
+        <div class="sb">
+          <h4>basics</h4>
+          <table>
+            <tr><td><kbd>play/stop</kbd></td><td>start / stop</td></tr>
+            <tr><td><kbd>write</kbd></td><td>write mode (REC on LCD)</td></tr>
+            <tr><td>keys 1–16 (write)</td><td>enter / remove steps</td></tr>
+            <tr><td>16 patterns</td><td>each with 16 steps</td></tr>
+          </table>
+          <h4>write mode — pitch &amp; length</h4>
+          <table>
+            <tr><td>hold lit step+knob A (write)</td><td>set note pitch for that step</td></tr>
+            <tr><td>hold lit step+knob B (write)</td><td>set note length for that step</td></tr>
+          </table>
+          <h4>live record</h4>
+          <table>
+            <tr><td>hold <kbd>write</kbd>+key (playing)</td><td>punch in live (quantized)</td></tr>
+            <tr><td>hold <kbd>write</kbd>+knobs (playing)</td><td>automate params over time</td></tr>
+          </table>
+          <h4>parameter lock</h4>
+          <table>
+            <tr><td>hold key+knobs (write)</td><td>lock A/B values to that step</td></tr>
+          </table>
+          <h4>patterns &amp; chains</h4>
+          <table>
+            <tr><td>hold <kbd>ptn</kbd>+key</td><td>select pattern</td></tr>
+            <tr><td>hold <kbd>ptn</kbd>+sequence</td><td>chain up to 16 patterns</td></tr>
+            <tr><td>hold <kbd>write</kbd>+<kbd>ptn</kbd>+key</td><td>copy pattern to slot</td></tr>
+            <tr><td><kbd>key</kbd>+<kbd>ptn</kbd></td><td>clear active pattern</td></tr>
+          </table>
+          <div class="note">chain: press ptn then tap keys in order to queue patterns</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /col-row -->
+
+  <div class="ftr">
+    <span>po–14 submarine cheatsheet · page 1 of 2</span>
+    <span>teenage.engineering/guides/po-14/en</span>
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ═══════════════ PAGE 2 ═══════════════ -->
+<div class="page" style="break-before:page; page-break-before:always;">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">po–14 submarine</div>
+      <div class="hdr-s">combos · sync · specs</div>
+    </div>
+    <div class="hdr-r">page 2 of 2</div>
+  </div>
+
+  <div class="col-row">
+
+    <!-- COL LEFT 50%: All combos -->
+    <div class="c50">
+      <div class="section">
+        <div class="sh">all button combinations</div>
+        <div class="sb">
+          <table>
+            <tr><th>combination</th><th>action</th></tr>
+            <tr><td>hold <kbd>sound</kbd>+1–15</td><td>select synth bass sound (engine)</td></tr>
+            <tr><td>hold <kbd>sound</kbd>+16</td><td>select micro drum kit</td></tr>
+            <tr><td>hold <kbd>ptn</kbd>+1–16</td><td>select pattern</td></tr>
+            <tr><td>hold <kbd>fx</kbd>+1–16</td><td>toggle effect on/off</td></tr>
+            <tr><td>hold <kbd>fx</kbd> (no key)</td><td>clear all effects</td></tr>
+            <tr><td><kbd>fx</kbd>+<kbd>play</kbd></td><td>fade out and stop</td></tr>
+            <tr><td>press <kbd>bpm</kbd></td><td>cycle presets (80 / 120 / 140)</td></tr>
+            <tr><td>hold <kbd>bpm</kbd>+knob B</td><td>fine-tune tempo (60–240 BPM)</td></tr>
+            <tr><td>hold <kbd>bpm</kbd>+knob A</td><td>adjust swing</td></tr>
+            <tr><td>hold <kbd>bpm</kbd>+1–16</td><td>set master volume (caution &gt;5 w/ headphones)</td></tr>
+            <tr><td>press <kbd>write</kbd></td><td>enter write / record mode</td></tr>
+            <tr><td>hold <kbd>write</kbd>+1–16 (playing)</td><td>live punch-in recording (quantized)</td></tr>
+            <tr><td>hold key+knobs (write mode)</td><td>parameter lock that step</td></tr>
+            <tr><td>hold <kbd>write</kbd>+knobs (playing)</td><td>automate param across timeline</td></tr>
+            <tr><td>hold lit step+knob A (write)</td><td>set note pitch for that step</td></tr>
+            <tr><td>hold lit step+knob B (write)</td><td>set note length for that step</td></tr>
+            <tr><td>hold <kbd>key</kbd>+1–16</td><td>punch in chord / arpeggio / transposition</td></tr>
+            <tr><td>hold <kbd>key</kbd> (no key press)</td><td>clear current play style</td></tr>
+            <tr><td><kbd>key</kbd>+<kbd>bpm</kbd></td><td>toggle sync mode (SY0–SY5)</td></tr>
+            <tr><td>hold <kbd>ptn</kbd>+sequence of keys</td><td>chain patterns (up to 16)</td></tr>
+            <tr><td>hold <kbd>write</kbd>+<kbd>ptn</kbd>+1–16</td><td>copy pattern to slot</td></tr>
+            <tr><td><kbd>key</kbd>+<kbd>ptn</kbd></td><td>clear active pattern</td></tr>
+            <tr><td><kbd>sound</kbd>+<kbd>bpm</kbd></td><td>check battery status</td></tr>
+            <tr><td><kbd>sound</kbd>+<kbd>write</kbd></td><td>power off (saves all data)</td></tr>
+            <tr><td>hold <kbd>ptn</kbd>+<kbd>write</kbd> at battery insert</td><td>factory reset</td></tr>
+          </table>
+          <h4>clock &amp; alarm</h4>
+          <table>
+            <tr><td>on startup</td><td>knob A = hours · knob B = minutes · any key to confirm</td></tr>
+            <tr><td>set alarm</td><td>hold <kbd>sound</kbd>+<kbd>ptn</kbd> → knobs for time → key to set pattern</td></tr>
+            <tr><td>disable alarm</td><td>turn knob A all the way down</td></tr>
+            <tr><td>reset clock</td><td>remove batteries and restart</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL RIGHT 50%: Sync + Specs stacked -->
+    <div class="c50">
+
+      <div class="section">
+        <div class="sh">sync &amp; connectivity</div>
+        <div class="sb">
+          <h4>sync modes — hold key + bpm to toggle</h4>
+          <table>
+            <tr><th>mode</th><th>input</th><th>output</th></tr>
+            <tr><td>SY0</td><td>stereo</td><td>stereo (default)</td></tr>
+            <tr><td>SY1</td><td>stereo</td><td>mono + sync</td></tr>
+            <tr><td>SY2</td><td>sync</td><td>stereo</td></tr>
+            <tr><td>SY3</td><td>sync</td><td>mono + sync</td></tr>
+            <tr><td>SY4</td><td>mono + sync</td><td>stereo</td></tr>
+            <tr><td>SY5</td><td>mono + sync</td><td>mono + sync</td></tr>
+          </table>
+          <div class="note">3.5mm stereo cable · audio: right ch · sync: left ch · toggle with <kbd>key</kbd>+<kbd>bpm</kbd></div>
+          <h4>two-unit setup</h4>
+          <table>
+            <tr><td>master</td><td>SY1 or SY3 (sync out on left ch)</td></tr>
+            <tr><td>slave</td><td>SY2 or SY4 (sync in on left ch)</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sh">specs &amp; power</div>
+        <div class="sb">
+          <ul class="sl">
+            <li><span class="k">sounds</span><span class="v">15 synth bass engines + micro drum kit</span></li>
+            <li><span class="k">effects</span><span class="v">16</span></li>
+            <li><span class="k">patterns</span><span class="v">16 × 16 steps</span></li>
+            <li><span class="k">max chain</span><span class="v">16 patterns</span></li>
+            <li><span class="k">BPM range</span><span class="v">60–240 (presets: 80 / 120 / 140)</span></li>
+            <li><span class="k">volume</span><span class="v">16 levels (caution above 5 w/ headphones)</span></li>
+            <li><span class="k">sync modes</span><span class="v">6 (SY0–SY5)</span></li>
+            <li><span class="k">power</span><span class="v">2 × AAA batteries</span></li>
+            <li><span class="k">auto power-off</span><span class="v">5 min idle / 60 min w/ line-in</span></li>
+          </ul>
+          <h4>power controls</h4>
+          <table>
+            <tr><td><kbd>sound</kbd>+<kbd>write</kbd></td><td>manual power off (saves data)</td></tr>
+            <tr><td><kbd>sound</kbd>+<kbd>bpm</kbd></td><td>check battery status</td></tr>
+            <tr><td>any key</td><td>wake from sleep</td></tr>
+          </table>
+          <div class="note">same battery type only — do not mix · all data saves on power-off<br>factory reset: hold <kbd>ptn</kbd>+<kbd>write</kbd> while inserting batteries</div>
+        </div>
+      </div>
+
+    </div><!-- /c50 right -->
+
+  </div><!-- /col-row -->
+
+  <div class="ftr">
+    <span>po–14 submarine cheatsheet · page 2 of 2</span>
+    <span>teenage.engineering/guides/po-14/en · condensed reference — not a substitute for the full guide</span>
+  </div>
+
+</div><!-- /page 2 -->
+
+</body>
+</html>

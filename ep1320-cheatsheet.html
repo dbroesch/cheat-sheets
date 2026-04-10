@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ep–1320 medieval — cheatsheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
+  :root {
+    --p:  #4a1800;
+    --pd: #2e0e00;
+    --pb: #c08060;
+    --pt: #f8f0e8;
+    --pl: #eedcc8;
+    --g:  #6b6b6b;
+    --bk: #1a1a1a;
+    --wh: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 7.5pt;
+    color: var(--bk);
+    background: var(--wh);
+    line-height: 1.4;
+  }
+
+  @page { size: letter landscape; margin: 10mm 12mm; }
+
+  .page { display: block; width: 100%; }
+
+  .col-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .c25 { flex: 1;    min-width: 0; }
+  .c33 { flex: 1.33; min-width: 0; }
+  .c50 { flex: 2;    min-width: 0; }
+
+  .section {
+    display: block;
+    width: 100%;
+    background: var(--wh);
+    border: 1px solid var(--pb);
+    border-radius: 2px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .sh {
+    background: var(--p);
+    color: var(--wh);
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 6px;
+  }
+  .sh.lt { background: var(--pt); color: var(--p); }
+  .sb { padding: 4px 6px; }
+
+  .hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--p);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .hdr-t { font-size: 18pt; font-weight: 600; color: var(--p); letter-spacing: -0.5px; line-height: 1; }
+  .hdr-s { font-size: 7pt; color: var(--g); letter-spacing: 1px; text-transform: uppercase; }
+  .hdr-r { font-size: 6.5pt; color: var(--g); text-align: right; }
+
+  .ftr {
+    margin-top: 5px;
+    border-top: 1px solid var(--pb);
+    padding-top: 3px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 6pt;
+    color: var(--g);
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 7pt; table-layout: fixed; }
+  td, th { padding: 1.5px 4px; vertical-align: top; border-bottom: 1px solid var(--pl); overflow-wrap: break-word; word-break: break-word; }
+  tr:last-child td { border-bottom: none; }
+  th {
+    color: var(--p); font-weight: 600; font-size: 6pt;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    background: var(--pt); border-bottom: 1px solid var(--pb);
+  }
+  td:first-child { color: var(--p); font-weight: 500; white-space: nowrap; padding-right: 5px; }
+
+  kbd {
+    display: inline-block;
+    background: var(--pt); border: 1px solid var(--pb); border-radius: 2px;
+    padding: 0 3px; font-size: 6.5pt; font-family: inherit;
+    color: var(--pd); font-weight: 600; line-height: 1.5; white-space: nowrap;
+  }
+
+  .note {
+    background: var(--pt); border-left: 2px solid var(--p);
+    padding: 3px 5px; font-size: 6.5pt; color: var(--g); margin-top: 3px;
+  }
+
+  .sl { list-style: none; }
+  .sl li { display: flex; justify-content: space-between; padding: 1.5px 0; border-bottom: 1px solid var(--pl); font-size: 6.5pt; gap: 6px; }
+  .sl li:last-child { border-bottom: none; }
+  .sl .k { color: var(--g); }
+  .sl .v { font-weight: 500; text-align: right; }
+
+  h4 {
+    font-size: 6.5pt; font-weight: 600; color: var(--p);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin: 4px 0 2px; break-after: avoid; page-break-after: avoid;
+  }
+  h4:first-child { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<div class="page">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">ep–1320 medieval</div>
+      <div class="hdr-s">quick reference cheatsheet</div>
+    </div>
+    <div class="hdr-r">teenage.engineering · sampler &amp; composer</div>
+  </div>
+
+  <div class="col-row">
+
+    <!-- COL 1: Hardware Controls -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">hardware controls</div>
+        <div class="sb">
+          <table>
+            <tr><th>control</th><th>function</th></tr>
+            <tr><td>paeds 1–12</td><td>trigger sounds · step entry · number pad</td></tr>
+            <tr><td>groupa–d</td><td>select group (drums / bass / melody / loops)</td></tr>
+            <tr><td>sonus</td><td>sound selection &amp; edit mode</td></tr>
+            <tr><td>manus</td><td>main mode (sequencer &amp; song)</td></tr>
+            <tr><td>tempus</td><td>tempo mode</td></tr>
+            <tr><td>claves</td><td>keyboard / scale mode</td></tr>
+            <tr><td>codex</td><td>record arm</td></tr>
+            <tr><td>fabula</td><td>play / stop</td></tr>
+            <tr><td>altero</td><td>alt / shift modifier</td></tr>
+            <tr><td>erado</td><td>erase / delete</td></tr>
+            <tr><td>quantum</td><td>timing &amp; note interval</td></tr>
+            <tr><td>faedr</td><td>fader (volume / automation)</td></tr>
+            <tr><td>demus</td><td>sample recording mode</td></tr>
+            <tr><td>intra</td><td>enter / confirm</td></tr>
+            <tr><td>minus / plus</td><td>navigate · scroll · adjust</td></tr>
+            <tr><td>knobX</td><td>parameter 1 (context-sensitive)</td></tr>
+            <tr><td>knobY</td><td>parameter 2 (context-sensitive)</td></tr>
+          </table>
+          <div class="note"><kbd>altero</kbd>+<kbd>erado</kbd> = system settings · <kbd>altero</kbd>+<kbd>groupb</kbd> = undo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 2: Sonus Mode -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">sonus — sound mode</div>
+        <div class="sb">
+          <table>
+            <tr><td>minus / plus</td><td>scroll sounds one-by-one</td></tr>
+            <tr><td><kbd>altero</kbd>+minus/plus</td><td>jump by 10</td></tr>
+            <tr><td>hold <kbd>sonus</kbd>+pads</td><td>direct number entry (e.g. 0-5-3)</td></tr>
+            <tr><td>hold pad</td><td>preview sound name</td></tr>
+          </table>
+          <h4>sound library (rom — read-only)</h4>
+          <table>
+            <tr><td>1–69</td><td>drums</td></tr>
+            <tr><td>70–114</td><td>phrases</td></tr>
+            <tr><td>115–127</td><td>instruments</td></tr>
+            <tr><td>128–155</td><td>one shots</td></tr>
+            <tr><td>156–220</td><td>SFX / foley</td></tr>
+            <tr><td>221–999</td><td>user samples</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">sonus edito — <kbd>altero</kbd>+<kbd>sonus</kbd></div>
+        <div class="sb">
+          <div class="note" style="margin-bottom:3px;">navigate sub-modes with minus/plus</div>
+          <table>
+            <tr><th>mode</th><th>knobX</th><th>knobY</th></tr>
+            <tr><td>sound</td><td>play mode (oneshot / key / legato)</td><td>pan (L/C/R)</td></tr>
+            <tr><td>trim</td><td>sample start point</td><td>sample length</td></tr>
+            <tr><td>envelope</td><td>attack</td><td>release</td></tr>
+            <tr><td>time stretch</td><td>mode (BPM / BAR)</td><td>tempo / bars</td></tr>
+            <tr><td>MIDI</td><td>MIDI channel (per pad)</td><td>root note</td></tr>
+            <tr><td>muto group</td><td colspan="2">last-pressed pad mutes others in group</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3: Manus + Tempus + Claves -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">manus — main mode</div>
+        <div class="sb">
+          <h4>navigation</h4>
+          <table>
+            <tr><td>hold <kbd>manus</kbd>+pad 1–9</td><td>switch project</td></tr>
+            <tr><td>hold <kbd>manus</kbd>+minus/plus</td><td>select scene 01–99</td></tr>
+            <tr><td>hold group+minus/plus</td><td>select pattern within group</td></tr>
+            <tr><td>hold faedr</td><td>select fader assignment (printed above pads)</td></tr>
+          </table>
+          <h4>altero shortcuts (in manus)</h4>
+          <table>
+            <tr><td><kbd>altero</kbd>+<kbd>groupa</kbd></td><td>find next empty pattern</td></tr>
+            <tr><td><kbd>altero</kbd>+<kbd>groupb</kbd></td><td>undo</td></tr>
+            <tr><td><kbd>altero</kbd>+<kbd>groupc</kbd></td><td>copy bar (press once) / full pattern (twice)</td></tr>
+            <tr><td><kbd>altero</kbd>+<kbd>groupd</kbd></td><td>paste</td></tr>
+            <tr><td><kbd>altero</kbd>+<kbd>manus</kbd></td><td>commit — duplicate scene &amp; advance</td></tr>
+            <tr><td><kbd>altero</kbd>+minus/plus</td><td>navigate bars</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">tempus — tempo mode</div>
+        <div class="sb">
+          <table>
+            <tr><td>knobX</td><td>BPM (60–180 via knob · 40–399 via pad entry)</td></tr>
+            <tr><td>knobY</td><td>metronome volume</td></tr>
+            <tr><td>hold <kbd>tempus</kbd>+pads</td><td>direct BPM entry (e.g. 120.51)</td></tr>
+            <tr><td><kbd>manus</kbd>+<kbd>tempus</kbd></td><td>set time signature (knobX / knobY)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">claves — keyboard mode</div>
+        <div class="sb">
+          <table>
+            <tr><td>press <kbd>claves</kbd> on pad</td><td>chromatic layout across 12 paeds</td></tr>
+            <tr><td>hold <kbd>claves</kbd>+minus/plus</td><td>shift octave up / down</td></tr>
+            <tr><td>hold <kbd>claves</kbd>+pad</td><td>transpose root note</td></tr>
+          </table>
+          <div class="note">scale type set in system settings (altero+erado) → paed → scale</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 4: Recording -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">live record</div>
+        <div class="sb">
+          <table>
+            <tr><td>press <kbd>codex</kbd> → <kbd>fabula</kbd></td><td>4-beat count-in → record</td></tr>
+            <tr><td><kbd>codex</kbd>+<kbd>fabula</kbd></td><td>start recording immediately (no count-in)</td></tr>
+            <tr><td><kbd>altero</kbd>+<kbd>fabula</kbd></td><td>record from pattern start</td></tr>
+            <tr><td>press <kbd>fabula</kbd></td><td>stop recording &amp; pause playback</td></tr>
+            <tr><td>press <kbd>codex</kbd></td><td>continue playing (stop recording)</td></tr>
+            <tr><td>hold <kbd>codex</kbd>+pad</td><td>overdub pad while playing</td></tr>
+          </table>
+          <h4>pattern length</h4>
+          <table>
+            <tr><td>hold <kbd>codex</kbd>+minus/plus</td><td>adjust length before recording</td></tr>
+            <tr><td><kbd>codex</kbd>+<kbd>altero</kbd>+plus</td><td>duplicate length (preserves notes)</td></tr>
+          </table>
+          <div class="note">default: 1 bar · max: 99 bars per group</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">step sequence</div>
+        <div class="sb">
+          <table>
+            <tr><td>minus / plus</td><td>navigate steps (when stopped)</td></tr>
+            <tr><td>hold <kbd>codex</kbd>+pad</td><td>record pad to current step</td></tr>
+            <tr><td>hold <kbd>erado</kbd>+pad</td><td>delete notes on pad</td></tr>
+            <tr><td>lit pads</td><td>indicate recorded content</td></tr>
+          </table>
+          <h4>note properties (hold altero + pad)</h4>
+          <table>
+            <tr><td>knobX</td><td>note velocity</td></tr>
+            <tr><td>knobY</td><td>note duration (1 tick – 1 bar)</td></tr>
+            <tr><td>minus/plus</td><td>nudge note timing (quantize or free time)</td></tr>
+          </table>
+          <div class="note">resolution: 96 ppqn · 24-tick steps (OP-Z compatible)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ftr">
+    <span>ep–1320 medieval cheatsheet · page 1 of 2</span>
+    <span>teenage.engineering/guides/ep-1320</span>
+  </div>
+
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" style="break-before:page; page-break-before:always;">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">ep–1320 medieval</div>
+      <div class="hdr-s">functions · sync · system</div>
+    </div>
+    <div class="hdr-r">page 2 of 2</div>
+  </div>
+
+  <div class="col-row">
+
+    <!-- COL 1: Quantum + Necto -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">quantum — timing &amp; intervals</div>
+        <div class="sb">
+          <table>
+            <tr><th>interval</th><th>steps/bar</th></tr>
+            <tr><td>1/8</td><td>8 steps</td></tr>
+            <tr><td>1/8T</td><td>12 steps (triplet)</td></tr>
+            <tr><td>1/16</td><td>16 steps</td></tr>
+            <tr><td>1/16T</td><td>24 steps (triplet)</td></tr>
+            <tr><td>1/32</td><td>32 steps</td></tr>
+          </table>
+          <div class="note" style="margin-top:3px;">
+            press <kbd>quantum</kbd>: knobX = interval · knobY = swing<br>
+            <kbd>minus</kbd> = quantize mode · <kbd>plus</kbd> = free time
+          </div>
+          <h4>note repeat (hold quantum + pad)</h4>
+          <table>
+            <tr><td>hold <kbd>quantum</kbd>+pad</td><td>repeat at selected interval</td></tr>
+            <tr><td>hold <kbd>quantum</kbd>+multi-pad</td><td>arpeggio across held pads</td></tr>
+          </table>
+          <div class="note">pressure-sensitive when velocity enabled</div>
+          <h4>quantum correctus — <kbd>altero</kbd>+<kbd>quantum</kbd></h4>
+          <table>
+            <tr><td>stopped: press pad</td><td>quantize all steps on that pad</td></tr>
+            <tr><td>playing: hold pad</td><td>quantize notes while held</td></tr>
+            <tr><td>knobX</td><td>target note interval</td></tr>
+            <tr><td>knobY</td><td>swing (at 1/8 or 1/16)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">necto — loop</div>
+        <div class="sb">
+          <table>
+            <tr><td><kbd>altero</kbd>+<kbd>tempus</kbd></td><td>create loop (hold to set length)</td></tr>
+            <tr><td>knobX</td><td>slide loop position (tempo-locked)</td></tr>
+            <tr><td>knobY</td><td>set loop length</td></tr>
+            <tr><td>press <kbd>tempus</kbd></td><td>exit loop immediately</td></tr>
+            <tr><td>press <kbd>manus</kbd></td><td>exit loop at next bar boundary</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 2: Faedr + Copy/Paste + Erado -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">faedr — automation</div>
+        <div class="sb">
+          <table>
+            <tr><td>hold <kbd>faedr</kbd></td><td>view automations · blinking = has data</td></tr>
+            <tr><td>hold <kbd>codex</kbd>+faedr</td><td>record faedr movements</td></tr>
+            <tr><td>hold group pad+faedr</td><td>adjust group project volume</td></tr>
+            <tr><td><kbd>altero</kbd>+<kbd>faedr</kbd></td><td>reset to defaults (RES → press again = undo)</td></tr>
+            <tr><td><kbd>altero</kbd>+faedr (move)</td><td>fine-grained value control</td></tr>
+            <tr><td>hold <kbd>erado</kbd>+faedr 2s</td><td>erase all automation (FDR blinks → DEL)</td></tr>
+          </table>
+          <div class="note">fader assignments printed above paeds · reassign by holding faedr</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">erado — erase &amp; undo</div>
+        <div class="sb">
+          <table>
+            <tr><td>hold <kbd>erado</kbd>+pad</td><td>delete notes on pad (live or stopped)</td></tr>
+            <tr><td>hold <kbd>erado</kbd>+pad (long)</td><td>erase all track notes (TRK blinks)</td></tr>
+            <tr><td>hold <kbd>erado</kbd>+groupa–d</td><td>erase current pattern (PTN blinks)</td></tr>
+            <tr><td>hold <kbd>erado</kbd>+<kbd>manus</kbd></td><td>erase current scene (SCN blinks)</td></tr>
+            <tr><td>hold <kbd>manus</kbd>+<kbd>erado</kbd>+proj</td><td>erase entire project</td></tr>
+            <tr><td><kbd>altero</kbd>+<kbd>groupb</kbd></td><td>undo (shield icon when available)</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3: Sample + Chop -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">sample — <kbd>altero</kbd>+<kbd>demus</kbd></div>
+        <div class="sb">
+          <table>
+            <tr><td>hold pad</td><td>start recording to that pad</td></tr>
+            <tr><td>release pad</td><td>stop recording</td></tr>
+            <tr><td>press pad</td><td>audition recorded sample</td></tr>
+            <tr><td>minus/plus</td><td>select input: stereo LR / L / R / mono C</td></tr>
+            <tr><td>knobX / knobY</td><td>amplitude / volume</td></tr>
+            <tr><td>press <kbd>manus</kbd></td><td>exit sample mode</td></tr>
+          </table>
+          <div class="note">slots 221+ · hold sonus+pads+intra→altero+demus = specific slot · erado+sonus = delete</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">chop — <kbd>altero</kbd>+<kbd>demus</kbd>+<kbd>demus</kbd></div>
+        <div class="sb">
+          <h4>auto chop</h4>
+          <table>
+            <tr><td>select group A–D</td><td>assign slices to that group</td></tr>
+            <tr><td>minus / plus</td><td>adjust number of slices</td></tr>
+          </table>
+          <div class="note">beat-tracking auto-detection · populates bottom-left → top-right</div>
+          <h4>live chop</h4>
+          <table>
+            <tr><td>hold pad</td><td>chop (hold duration = slice length)</td></tr>
+            <tr><td>select pad → knobX</td><td>refine slice start point</td></tr>
+            <tr><td>select pad → knobY</td><td>refine slice end point</td></tr>
+            <tr><td>hold <kbd>altero</kbd>+knob</td><td>fine adjustment</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 4: Sync + System -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">sync &amp; MIDI</div>
+        <div class="sb">
+          <table>
+            <tr><th>port</th><th>type</th></tr>
+            <tr><td>sync in/out</td><td>3.5mm · 1/8 note / 1/16 note / Sync24</td></tr>
+            <tr><td>MIDI in/out</td><td>3.5mm TRS · notes, CC, clock, program</td></tr>
+            <tr><td>USB-C</td><td>MIDI host · firmware · sample transfer</td></tr>
+          </table>
+          <div class="note" style="margin-top:3px;">to PO: EP out→PO in, PO→SY2, 1/8 rate · from PO: PO out→EP in, PO→SY1 · vintage: Sync24</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">system settings — <kbd>altero</kbd>+<kbd>erado</kbd></div>
+        <div class="sb">
+          <div class="note" style="margin-bottom:3px;">navigate: minus/plus · confirm: intra · or type code + intra</div>
+          <table>
+            <tr><th>setting</th><th>codes / options</th></tr>
+            <tr><td>MIDI clock</td><td>off (100) · receive (101) · send (102)</td></tr>
+            <tr><td>sync in rate</td><td>1/8 (200) · 1/16 default (201) · sync24 (202)</td></tr>
+            <tr><td>sync out rate</td><td>1/8 (210) · 1/16 default (211) · sync24 (212)</td></tr>
+            <tr><td>pad velocity</td><td>off default (300) · hi (301) · low (302)</td></tr>
+            <tr><td>scale</td><td>type 310–319 · key 320–331 (see guide for values)</td></tr>
+            <tr><td>metronome</td><td>rec+play (400) · rec only default (401)</td></tr>
+            <tr><td>scenes</td><td>immediate default (410) · sync to bar end (411)</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ftr">
+    <span>ep–1320 medieval cheatsheet · page 2 of 2</span>
+    <span>teenage.engineering/guides/ep-1320 · condensed reference — not a substitute for the full guide</span>
+  </div>
+
+</div>
+
+</body>
+</html>

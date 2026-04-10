@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>pocket operators — master cheatsheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
+  :root {
+    --p:  #1e3a5f;
+    --pd: #0f1f3a;
+    --pb: #8ab0d0;
+    --pt: #e8f0f8;
+    --pl: #c8dcee;
+    --g:  #6b6b6b;
+    --bk: #1a1a1a;
+    --wh: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 7.5pt;
+    color: var(--bk);
+    background: var(--wh);
+    line-height: 1.4;
+  }
+
+  @page { size: letter landscape; margin: 10mm 12mm; }
+
+  .page { display: block; width: 100%; }
+
+  .col-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .c25 { flex: 1;    min-width: 0; }
+  .c33 { flex: 1.33; min-width: 0; }
+
+  .section {
+    display: block;
+    width: 100%;
+    background: var(--wh);
+    border: 1px solid var(--pb);
+    border-radius: 2px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .sh {
+    background: var(--p);
+    color: var(--wh);
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 6px;
+  }
+  .sb { padding: 4px 6px; }
+
+  .hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--p);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .hdr-t { font-size: 18pt; font-weight: 600; color: var(--p); letter-spacing: -0.5px; line-height: 1; }
+  .hdr-s { font-size: 7pt; color: var(--g); letter-spacing: 1px; text-transform: uppercase; }
+  .hdr-r { font-size: 6.5pt; color: var(--g); text-align: right; }
+
+  .ftr {
+    margin-top: 5px;
+    border-top: 1px solid var(--pb);
+    padding-top: 3px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 6pt;
+    color: var(--g);
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 7pt; table-layout: fixed; }
+  td, th { padding: 1.5px 4px; vertical-align: top; border-bottom: 1px solid var(--pl); overflow-wrap: break-word; word-break: break-word; }
+  tr:last-child td { border-bottom: none; }
+  th {
+    color: var(--p); font-weight: 600; font-size: 6pt;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    background: var(--pt); border-bottom: 1px solid var(--pb);
+  }
+  td:first-child { color: var(--p); font-weight: 500; white-space: nowrap; padding-right: 5px; }
+
+  kbd {
+    display: inline-block;
+    background: var(--pt); border: 1px solid var(--pb); border-radius: 2px;
+    padding: 0 3px; font-size: 6.5pt; font-family: inherit;
+    color: var(--pd); font-weight: 600; line-height: 1.5; white-space: nowrap;
+  }
+
+  .note {
+    background: var(--pt); border-left: 2px solid var(--p);
+    padding: 3px 5px; font-size: 6.5pt; color: var(--g); margin-top: 3px;
+  }
+
+  .sl { list-style: none; }
+  .sl li { display: flex; justify-content: space-between; padding: 1.5px 0; border-bottom: 1px solid var(--pl); font-size: 6.5pt; gap: 6px; }
+  .sl li:last-child { border-bottom: none; }
+  .sl .k { color: var(--g); }
+  .sl .v { font-weight: 500; text-align: right; }
+
+  h4 {
+    font-size: 6.5pt; font-weight: 600; color: var(--p);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin: 4px 0 2px; break-after: avoid; page-break-after: avoid;
+  }
+  h4:first-child { margin-top: 0; }
+
+  .bpmrow { display: flex; gap: 3px; padding: 2px 0; }
+  .bpmp { flex: 1; text-align: center; background: var(--p); color: white; border-radius: 2px; padding: 2px 3px; font-size: 6pt; font-weight: 600; }
+  .bpml { font-size: 4.5pt; opacity: 0.85; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+  .bpmv { font-size: 7.5pt; font-weight: 600; display: block; line-height: 1.2; }
+
+  /* MODEL CARDS */
+  .mc { margin-bottom: 6px; break-inside: avoid; page-break-inside: avoid; }
+  .mch {
+    color: var(--wh); font-size: 6.5pt; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 6px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-radius: 2px 2px 0 0;
+  }
+  .mch-tag { font-size: 5pt; opacity: 0.85; font-weight: 400; letter-spacing: 0.8px; }
+  .mcb { border: 1px solid #ccc; border-top: none; border-radius: 0 0 2px 2px; padding: 3px 5px; }
+  .mct { width: 100%; border-collapse: collapse; font-size: 6pt; table-layout: fixed; }
+  .mct td { padding: 1.5px 3px; border-bottom: 1px solid #eee; vertical-align: top; overflow-wrap: break-word; word-break: break-word; color: var(--bk); font-weight: 400; white-space: normal; }
+  .mct tr:last-child td { border-bottom: none; }
+  .mct td:first-child { font-weight: 600; width: 22%; white-space: nowrap; padding-right: 4px; }
+
+  /* MODEL CARD SUB-HEADER */
+  .mcsh {
+    font-size: 5pt; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.8px; padding: 2px 3px 1px; margin-top: 2px;
+  }
+
+  /* MODEL CARD MICRO GRIDS */
+  .mkg8 {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 2px; padding: 2px 3px 3px;
+  }
+  .mkg4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2px; padding: 2px 3px 3px;
+  }
+  .mkc {
+    border: 1px solid #ddd; border-radius: 2px; padding: 1px 2px;
+    text-align: center; min-width: 0; overflow: hidden;
+  }
+  .mkn { font-size: 4pt; font-weight: 600; display: block; line-height: 1.3; }
+  .mkl { font-size: 4pt; color: #333; display: block; line-height: 1.3; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COMMON FEATURES -->
+<div class="page">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">pocket operators</div>
+      <div class="hdr-s">common features — all po–xx models</div>
+    </div>
+    <div class="hdr-r">teenage.engineering · master reference</div>
+  </div>
+
+  <div class="col-row">
+
+    <div class="c25">
+      <div class="section">
+        <div class="sh">hardware controls</div>
+        <div class="sb">
+          <table>
+            <tr><th>control</th><th>function</th></tr>
+            <tr><td>keys 1–16</td><td>sounds / patterns / fx / steps / volume</td></tr>
+            <tr><td>knob A</td><td>param 1 / swing / hours (context)</td></tr>
+            <tr><td>knob B</td><td>param 2 / tempo / minutes (context)</td></tr>
+            <tr><td>sound</td><td>hold + key to select sound</td></tr>
+            <tr><td>pattern</td><td>hold + key to select / chain</td></tr>
+            <tr><td>fx</td><td>hold + key = toggle effect · hold alone = clear all</td></tr>
+            <tr><td>bpm</td><td>cycle presets; hold + knobs to fine-tune</td></tr>
+            <tr><td>write</td><td>enter write / record mode</td></tr>
+            <tr><td>play/stop</td><td>start and stop sequencer</td></tr>
+            <tr><td>3rd button</td><td>varies per model — see page 2</td></tr>
+          </table>
+          <div class="note" style="margin-top:3px;"><kbd>fx</kbd>+<kbd>play</kbd> = fade out &amp; stop · sync = 3rd btn+<kbd>bpm</kbd> (model-specific)</div>
+          <h4>sound parameters</h4>
+          <table>
+            <tr><td>knob A</td><td>param 1 (pitch / timbre / character)</td></tr>
+            <tr><td>knob B</td><td>param 2 (decay / color / texture)</td></tr>
+          </table>
+          <div class="note">per-step parameter locking on all models</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c25">
+      <div class="section">
+        <div class="sh">tempo &amp; bpm</div>
+        <div class="sb">
+          <div class="bpmrow">
+            <div class="bpmp"><span class="bpml">hip hop</span><span class="bpmv">80</span></div>
+            <div class="bpmp"><span class="bpml">disco</span><span class="bpmv">120</span></div>
+            <div class="bpmp"><span class="bpml">techno</span><span class="bpmv">140</span></div>
+          </div>
+          <div class="note" style="margin-top:3px;">
+            hold <kbd>bpm</kbd>+knob B = fine-tune (60–240 BPM)<br>
+            hold <kbd>bpm</kbd>+knob A = swing amount<br>
+            hold <kbd>bpm</kbd>+1–16 = master volume (caution above 5 w/ headphones)
+          </div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">step multiplier / retrigger</div>
+        <div class="sb">
+          <table>
+            <tr><td>hold step+<kbd>bpm</kbd></td><td>set step multiplier</td></tr>
+            <tr><td>press again</td><td>cycle 2× → 4× → 8× → 16×</td></tr>
+          </table>
+          <div class="note">some models use an <kbd>M</kbd> button instead</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">sequencer basics</div>
+        <div class="sb">
+          <table>
+            <tr><td><kbd>play/stop</kbd></td><td>start / stop</td></tr>
+            <tr><td><kbd>write</kbd></td><td>write mode (REC on LCD)</td></tr>
+            <tr><td>keys 1–16 (write)</td><td>enter / remove steps</td></tr>
+            <tr><td>16 patterns</td><td>each with 16 steps</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="c25">
+      <div class="section">
+        <div class="sh">recording &amp; parameter lock</div>
+        <div class="sb">
+          <h4>live record (while playing)</h4>
+          <table>
+            <tr><td>hold <kbd>write</kbd>+key</td><td>punch in live (quantized)</td></tr>
+            <tr><td>hold <kbd>write</kbd>+knobs</td><td>automate params over time</td></tr>
+          </table>
+          <h4>parameter lock (write mode)</h4>
+          <table>
+            <tr><td>hold step+knob A</td><td>lock param 1 to that step</td></tr>
+            <tr><td>hold step+knob B</td><td>lock param 2 to that step</td></tr>
+          </table>
+          <h4>patterns &amp; chains</h4>
+          <table>
+            <tr><td>hold <kbd>ptn</kbd>+key</td><td>select pattern</td></tr>
+            <tr><td>hold <kbd>ptn</kbd>+sequence</td><td>chain patterns in order</td></tr>
+            <tr><td>hold <kbd>write</kbd>+<kbd>ptn</kbd>+key</td><td>copy pattern to slot</td></tr>
+            <tr><td>3rd btn+<kbd>ptn</kbd></td><td>clear active pattern</td></tr>
+          </table>
+          <div class="note">chain: 1,1,1,4 → plays pattern 1 × 3 then 4 · max chain: 16–128 (model-specific)</div>
+          <h4>power controls</h4>
+          <table>
+            <tr><td><kbd>sound</kbd>+<kbd>write</kbd></td><td>manual power off (saves data)</td></tr>
+            <tr><td><kbd>sound</kbd>+<kbd>bpm</kbd></td><td>battery status check</td></tr>
+            <tr><td>any key</td><td>wake from sleep</td></tr>
+          </table>
+          <div class="note">factory reset: hold <kbd>ptn</kbd>+<kbd>write</kbd> while inserting batteries</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c25">
+      <div class="section">
+        <div class="sh">sync &amp; connectivity — identical on all models</div>
+        <div class="sb">
+          <h4>sync modes — 3rd btn+bpm to cycle (see page 2)</h4>
+          <table>
+            <tr><th>mode</th><th>input</th><th>output</th></tr>
+            <tr><td>SY0</td><td>stereo</td><td>stereo (default)</td></tr>
+            <tr><td>SY1</td><td>stereo</td><td>mono + sync</td></tr>
+            <tr><td>SY2</td><td>sync</td><td>stereo</td></tr>
+            <tr><td>SY3</td><td>sync</td><td>mono + sync</td></tr>
+            <tr><td>SY4</td><td>mono + sync</td><td>stereo</td></tr>
+            <tr><td>SY5</td><td>mono + sync</td><td>mono + sync</td></tr>
+          </table>
+          <div class="note">3.5mm stereo · audio: right ch · sync: left ch · master = SY1/SY3 · slave = SY2/SY4</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">clock &amp; alarm</div>
+        <div class="sb">
+          <table>
+            <tr><td>on startup</td><td>knob A = hours · knob B = minutes · any key = confirm</td></tr>
+            <tr><td>set alarm</td><td>hold <kbd>sound</kbd>+<kbd>ptn</kbd> → knobs for time → key</td></tr>
+            <tr><td>disable alarm</td><td>set alarm · turn knob A all the way down</td></tr>
+            <tr><td>reset clock</td><td>remove batteries and restart</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">universal specs</div>
+        <div class="sb">
+          <ul class="sl">
+            <li><span class="k">power</span><span class="v">2 × AAA batteries</span></li>
+            <li><span class="k">auto off</span><span class="v">5 min idle / 60 min w/ line-in</span></li>
+            <li><span class="k">BPM range</span><span class="v">60–240 (presets: 80 / 120 / 140)</span></li>
+            <li><span class="k">patterns</span><span class="v">16 × 16 steps (all models)</span></li>
+            <li><span class="k">sync modes</span><span class="v">6 · SY0–SY5 (all models)</span></li>
+            <li><span class="k">volume</span><span class="v">16 levels</span></li>
+            <li><span class="k">storage</span><span class="v">all data saved on power-off</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ftr">
+    <span>pocket operators master cheatsheet · page 1 of 2 — common features</span>
+    <span>teenage.engineering · see individual guides at teenage.engineering/guides/po-xx/en</span>
+  </div>
+
+</div>
+
+<!-- PAGE 2: MODEL GUIDE -->
+<div class="page" style="break-before:page; page-break-before:always;">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">pocket operators</div>
+      <div class="hdr-s">model guide — sounds, controls &amp; unique features per device</div>
+    </div>
+    <div class="hdr-r">page 2 of 2</div>
+  </div>
+
+  <div class="col-row">
+
+    <!-- COL 1: PO-12, PO-14, PO-16 -->
+    <div class="c33">
+
+      <!-- PO-12 -->
+      <div class="mc">
+        <div class="mch" style="background:#c85000;"><span>po–12 rhythm</span><span class="mch-tag">drum machine</span></div>
+        <div class="mcb" style="border-color:#e8b09a;">
+          <div class="mcsh" style="color:#c85000;">sounds (hold sound + key)</div>
+          <div class="mkg8">
+            <div class="mkc"><span class="mkn" style="color:#c85000;">1</span><span class="mkl">Bass Drum</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">2</span><span class="mkl">Snare</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">3</span><span class="mkl">Cl Hi-Hat</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">4</span><span class="mkl">Op Hi-Hat</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">5</span><span class="mkl">Syn Snare</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">6</span><span class="mkl">Sticks</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">7</span><span class="mkl">Cymbal</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">8</span><span class="mkl">Noise</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">9</span><span class="mkl">Hand Clap</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">10</span><span class="mkl">Click</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">11</span><span class="mkl">Low Tom</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">12</span><span class="mkl">Hi Tom</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">13</span><span class="mkl">Cow Bell</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">14</span><span class="mkl">Blip</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">15</span><span class="mkl">Tone</span></div>
+            <div class="mkc"><span class="mkn" style="color:#c85000;">16</span><span class="mkl">Bass Tone</span></div>
+          </div>
+          <table class="mct">
+            <tr><td style="color:#c85000;">retrigger</td><td>hold step+<kbd style="color:#c85000;border-color:#e8b09a;background:#fdf2ec;">bpm</kbd> → 2×/4×/8×/16×</td></tr>
+            <tr><td style="color:#c85000;">sync</td><td><kbd style="color:#c85000;border-color:#e8b09a;background:#fdf2ec;">fx</kbd>+<kbd style="color:#c85000;border-color:#e8b09a;background:#fdf2ec;">bpm</kbd> · chain: 16 patterns</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- PO-14 -->
+      <div class="mc">
+        <div class="mch" style="background:#1a4a8a;"><span>po–14 submarine</span><span class="mch-tag">bass synthesizer</span></div>
+        <div class="mcb" style="border-color:#a0b8d8;">
+          <table class="mct">
+            <tr><td style="color:#1a4a8a;">sounds 1–15</td><td>bass engines: FM, phase dist, wavetable, physical model + variants · knob A = pitch · B = decay</td></tr>
+            <tr><td style="color:#1a4a8a;">sound 16</td><td>micro drum kit · write: hold lit step+knob A = select drum voice</td></tr>
+            <tr><td style="color:#1a4a8a;">KEY button</td><td>hold+key 1–16 = chord / arp / transpose · hold alone = clear</td></tr>
+            <tr><td style="color:#1a4a8a;">pitch / len</td><td>write: hold lit step+knob A = pitch · knob B = note length</td></tr>
+            <tr><td style="color:#1a4a8a;">sync</td><td><kbd style="color:#1a4a8a;border-color:#a0b8d8;background:#eef3fa;">key</kbd>+<kbd style="color:#1a4a8a;border-color:#a0b8d8;background:#eef3fa;">bpm</kbd> · chain: 16 patterns</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- PO-16 -->
+      <div class="mc">
+        <div class="mch" style="background:#2a6a1a;"><span>po–16 plant</span><span class="mch-tag">lead synthesizer</span></div>
+        <div class="mcb" style="border-color:#9ac88a;">
+          <table class="mct">
+            <tr><td style="color:#2a6a1a;">sounds 1–15</td><td>lead engines: FM, subtractive, wavetable, physical model + variants · knob A = pitch · B = decay</td></tr>
+            <tr><td style="color:#2a6a1a;">sound 16</td><td>micro drum kit · write: hold lit step+knob A = select drum voice</td></tr>
+            <tr><td style="color:#2a6a1a;">KEY button</td><td>hold+key 1–16 = chord / arp / transpose · hold alone = clear</td></tr>
+            <tr><td style="color:#2a6a1a;">pitch / len</td><td>write: hold lit step+knob A = pitch · knob B = note length</td></tr>
+            <tr><td style="color:#2a6a1a;">sync</td><td><kbd style="color:#2a6a1a;border-color:#9ac88a;background:#eef8ea;">key</kbd>+<kbd style="color:#2a6a1a;border-color:#9ac88a;background:#eef8ea;">bpm</kbd> · chain: 16 patterns</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /col 1 -->
+
+    <!-- COL 2: PO-20, PO-24, PO-28 -->
+    <div class="c33">
+
+      <!-- PO-20 -->
+      <div class="mc">
+        <div class="mch" style="background:#7832b4;"><span>po–20 arcade</span><span class="mch-tag">chiptune / game sound</span></div>
+        <div class="mcb" style="border-color:#c49ee0;">
+          <div class="mcsh" style="color:#7832b4;">sounds (hold sound + key)</div>
+          <div class="mkg8">
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">1</span><span class="mkl">Bass</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">2</span><span class="mkl">Bass Drum</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">3</span><span class="mkl">Snare</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">4</span><span class="mkl">Hi-Hat</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">5</span><span class="mkl">Tom</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">6</span><span class="mkl">Blip</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">7</span><span class="mkl">Hardsync</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">8</span><span class="mkl">Noise FX</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">9</span><span class="mkl">Arpeggio</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">10</span><span class="mkl">Melodic Arp</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">11</span><span class="mkl">Falling Arp</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">12</span><span class="mkl">Octave Arp</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">13</span><span class="mkl">Lead</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">14</span><span class="mkl">Vibrato</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">15</span><span class="mkl">Portamento</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">16</span><span class="mkl">Echo</span></div>
+          </div>
+          <div class="mcsh" style="color:#7832b4; border-top:1px solid #e0d0f0; margin-top:2px; padding-top:3px;">chords (hold chord + key)</div>
+          <div class="mkg8">
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">1</span><span class="mkl">Dm</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">2</span><span class="mkl">Em</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">3</span><span class="mkl">Esus</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">4</span><span class="mkl">E</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">5</span><span class="mkl">F</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">6</span><span class="mkl">G</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">7</span><span class="mkl">C/G</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">8</span><span class="mkl">E/G#</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">9</span><span class="mkl">Am</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">10</span><span class="mkl">C/A</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">11</span><span class="mkl">Dm/A</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">12</span><span class="mkl">D/A</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">13</span><span class="mkl">A</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">14</span><span class="mkl">B/A</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">15</span><span class="mkl">C</span></div>
+            <div class="mkc"><span class="mkn" style="color:#7832b4;">16</span><span class="mkl">D</span></div>
+          </div>
+          <table class="mct">
+            <tr><td style="color:#7832b4;">chord btn</td><td>hold+knobs = drone · hold+sequence = chain chords (128 max)</td></tr>
+            <tr><td style="color:#7832b4;">fx 1–4</td><td>solo: chords · chords+lead · drums · drums+bass</td></tr>
+            <tr><td style="color:#7832b4;">sync</td><td><kbd style="color:#7832b4;border-color:#c49ee0;background:#f3ecfa;">chord</kbd>+<kbd style="color:#7832b4;border-color:#c49ee0;background:#f3ecfa;">bpm</kbd> · chain: 128 patterns</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- PO-24 -->
+      <div class="mc">
+        <div class="mch" style="background:#8a5f00;"><span>po–24 office</span><span class="mch-tag">office noise / percussion</span></div>
+        <div class="mcb" style="border-color:#d4b070;">
+          <div class="mcsh" style="color:#8a5f00;">sounds (hold sound + key)</div>
+          <div class="mkg8">
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">1</span><span class="mkl">5.25" Floppy</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">2</span><span class="mkl">3.5" Eject</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">3</span><span class="mkl">3.5" Floppy</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">4</span><span class="mkl">Keyboard</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">5</span><span class="mkl">Printer</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">6</span><span class="mkl">Joystick</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">7</span><span class="mkl">Mouse Click</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">8</span><span class="mkl">Tog Switch</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">9</span><span class="mkl">Bass Drum</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">10</span><span class="mkl">PC Beeper</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">11</span><span class="mkl">Hardsync</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">12</span><span class="mkl">HSync Noise</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">13</span><span class="mkl">Ring Mod</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">14</span><span class="mkl">Bass</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">15</span><span class="mkl">Glitch FX</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a5f00;">16</span><span class="mkl">Noise FX</span></div>
+          </div>
+          <table class="mct">
+            <tr><td style="color:#8a5f00;">SOLO btn</td><td>hold+key = latch solo · multiple simultaneous · clears at ptn boundary</td></tr>
+            <tr><td style="color:#8a5f00;">sync</td><td><kbd style="color:#8a5f00;border-color:#d4b070;background:#fdf6e8;">solo</kbd>+<kbd style="color:#8a5f00;border-color:#d4b070;background:#fdf6e8;">bpm</kbd> · chain: 128 patterns</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- PO-28 -->
+      <div class="mc">
+        <div class="mch" style="background:#3a3a7a;"><span>po–28 robot</span><span class="mch-tag">robot / chip synthesizer</span></div>
+        <div class="mcb" style="border-color:#a0a0d0;">
+          <div class="mcsh" style="color:#3a3a7a;">sounds — hi oct (1–8) · lo oct (9–15) · drum (16)</div>
+          <div class="mkg8">
+            <div class="mkc"><span class="mkn" style="color:#3a3a7a;">1/9</span><span class="mkl">LFO Pulse</span></div>
+            <div class="mkc"><span class="mkn" style="color:#3a3a7a;">2/10</span><span class="mkl">Pulse Wave</span></div>
+            <div class="mkc"><span class="mkn" style="color:#3a3a7a;">3/11</span><span class="mkl">Mixed Wave</span></div>
+            <div class="mkc"><span class="mkn" style="color:#3a3a7a;">4/12</span><span class="mkl">Triangle</span></div>
+            <div class="mkc"><span class="mkn" style="color:#3a3a7a;">5/13</span><span class="mkl">Echo</span></div>
+            <div class="mkc"><span class="mkn" style="color:#3a3a7a;">6/14</span><span class="mkl">Arpeggio</span></div>
+            <div class="mkc"><span class="mkn" style="color:#3a3a7a;">7/15</span><span class="mkl">Vibrato</span></div>
+            <div class="mkc"><span class="mkn" style="color:#3a3a7a;">8</span><span class="mkl">4-bit Tri</span></div>
+          </div>
+          <table class="mct">
+            <tr><td style="color:#3a3a7a;">channels</td><td>1–15 = melody · 16 = drums (2-channel sequencer)</td></tr>
+            <tr><td style="color:#3a3a7a;">GLIDE live</td><td>hold+key = glide up · hold+release = falling chromatic</td></tr>
+            <tr><td style="color:#3a3a7a;">GLIDE write</td><td>hold lit step+<kbd style="color:#3a3a7a;border-color:#a0a0d0;background:#f0f0fa;">glide</kbd> = up · hold unlit step+<kbd style="color:#3a3a7a;border-color:#a0a0d0;background:#f0f0fa;">glide</kbd> = down</td></tr>
+            <tr><td style="color:#3a3a7a;">GLIDE knobs</td><td>hold <kbd style="color:#3a3a7a;border-color:#a0a0d0;background:#f0f0fa;">glide</kbd>+knob A = vibrato depth · B = rate</td></tr>
+            <tr><td style="color:#3a3a7a;">sync</td><td><kbd style="color:#3a3a7a;border-color:#a0a0d0;background:#f0f0fa;">glide</kbd>+<kbd style="color:#3a3a7a;border-color:#a0a0d0;background:#f0f0fa;">bpm</kbd> · chain: 128 patterns</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /col 2 -->
+
+    <!-- COL 3: PO-32, PO-33, PO-35 -->
+    <div class="c33">
+
+      <!-- PO-32 -->
+      <div class="mc">
+        <div class="mch" style="background:#8a1a00;"><span>po–32 tonic</span><span class="mch-tag">drum synthesizer</span></div>
+        <div class="mcb" style="border-color:#d4906a;">
+          <div class="mcsh" style="color:#8a1a00;">sounds (hold sound + key)</div>
+          <div class="mkg8">
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">1</span><span class="mkl">Kick 1</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">2</span><span class="mkl">Snare 1</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">3</span><span class="mkl">Shaker/Zap</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">4</span><span class="mkl">LFO Effect</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">5</span><span class="mkl">Kick 2</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">6</span><span class="mkl">Snare 3</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">7</span><span class="mkl">Hi-Hat</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">8</span><span class="mkl">Claves/Cowbell</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">9</span><span class="mkl">Low Tom/Kick3</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">10</span><span class="mkl">Rimshot</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">11</span><span class="mkl">Tamb/Crash</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">12</span><span class="mkl">Hand Clap</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">13</span><span class="mkl">Bass</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">14</span><span class="mkl">FM Snare</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">15</span><span class="mkl">Cymbal</span></div>
+            <div class="mkc"><span class="mkn" style="color:#8a1a00;">16</span><span class="mkl">High Tom</span></div>
+          </div>
+          <table class="mct">
+            <tr><td style="color:#8a1a00;">ACC btn</td><td>hold+step = accent · <kbd style="color:#8a1a00;border-color:#d4906a;background:#fdf0ea;">acc</kbd>+<kbd style="color:#8a1a00;border-color:#d4906a;background:#fdf0ea;">ptn</kbd> = clear</td></tr>
+            <tr><td style="color:#8a1a00;">mute (4-ch)</td><td>hold key while playing = mute that channel (keys by column)</td></tr>
+            <tr><td style="color:#8a1a00;">data tx/rx</td><td><kbd style="color:#8a1a00;border-color:#d4906a;background:#fdf0ea;">write</kbd>+<kbd style="color:#8a1a00;border-color:#d4906a;background:#fdf0ea;">sound</kbd> = tx · <kbd style="color:#8a1a00;border-color:#d4906a;background:#fdf0ea;">acc</kbd>+<kbd style="color:#8a1a00;border-color:#d4906a;background:#fdf0ea;">sound</kbd> = rx</td></tr>
+            <tr><td style="color:#8a1a00;">sync</td><td><kbd style="color:#8a1a00;border-color:#d4906a;background:#fdf0ea;">acc</kbd>+<kbd style="color:#8a1a00;border-color:#d4906a;background:#fdf0ea;">bpm</kbd> · chain: 64 patterns</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- PO-33 -->
+      <div class="mc">
+        <div class="mch" style="background:#cc2200;"><span>po–33 k.o!</span><span class="mch-tag">micro sampler</span></div>
+        <div class="mcb" style="border-color:#e89070;">
+          <table class="mct">
+            <tr><td style="color:#cc2200;">slots 1–8</td><td>melodic · keys 1–16 = scale pitches · 40 sec total · built-in mic</td></tr>
+            <tr><td style="color:#cc2200;">slots 9–16</td><td>drum · keys 1–16 = individual slices (auto-sliced on record)</td></tr>
+            <tr><td style="color:#cc2200;">record</td><td>hold <kbd style="color:#cc2200;border-color:#e89070;background:#fdf2ee;">rec</kbd>+key = sample · <kbd style="color:#cc2200;border-color:#e89070;background:#fdf2ee;">rec</kbd>+<kbd style="color:#cc2200;border-color:#e89070;background:#fdf2ee;">sound</kbd> = delete slot</td></tr>
+            <tr><td style="color:#cc2200;">parameters</td><td>press <kbd style="color:#cc2200;border-color:#e89070;background:#fdf2ee;">fx</kbd> = cycle TONE (pitch/vol) → FILTER (freq/res) → TRIM (start/len)</td></tr>
+            <tr><td style="color:#cc2200;">lock tab</td><td>hold <kbd style="color:#cc2200;border-color:#e89070;background:#fdf2ee;">write</kbd>+<kbd style="color:#cc2200;border-color:#e89070;background:#fdf2ee;">sound</kbd>+key = copy sample to slot</td></tr>
+            <tr><td style="color:#cc2200;">sync</td><td><kbd style="color:#cc2200;border-color:#e89070;background:#fdf2ee;">rec</kbd>+<kbd style="color:#cc2200;border-color:#e89070;background:#fdf2ee;">bpm</kbd> · chain: 128 patterns</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- PO-35 -->
+      <div class="mc">
+        <div class="mch" style="background:#0a7a78;"><span>po–35 speak</span><span class="mch-tag">vocal synthesizer + sampler</span></div>
+        <div class="mcb" style="border-color:#70c0be;">
+          <div class="mcsh" style="color:#0a7a78;">voices (hold fx + key 1–8)</div>
+          <div class="mkg4">
+            <div class="mkc"><span class="mkn" style="color:#0a7a78;">1</span><span class="mkl">Neutral</span></div>
+            <div class="mkc"><span class="mkn" style="color:#0a7a78;">2</span><span class="mkl">Autotune</span></div>
+            <div class="mkc"><span class="mkn" style="color:#0a7a78;">3</span><span class="mkl">Retro</span></div>
+            <div class="mkc"><span class="mkn" style="color:#0a7a78;">4</span><span class="mkl">Noise</span></div>
+            <div class="mkc"><span class="mkn" style="color:#0a7a78;">5</span><span class="mkl">Robot</span></div>
+            <div class="mkc"><span class="mkn" style="color:#0a7a78;">6</span><span class="mkl">Fifth</span></div>
+            <div class="mkc"><span class="mkn" style="color:#0a7a78;">7</span><span class="mkl">Vocoder</span></div>
+            <div class="mkc"><span class="mkn" style="color:#0a7a78;">8</span><span class="mkl">Synth</span></div>
+          </div>
+          <table class="mct">
+            <tr><td style="color:#0a7a78;">slots 1–15</td><td>vocal recordings · max 8 sec each · built-in mic</td></tr>
+            <tr><td style="color:#0a7a78;">record</td><td>hold <kbd style="color:#0a7a78;border-color:#70c0be;background:#eaf8f8;">rec</kbd>+key 1–15 · release = stop</td></tr>
+            <tr><td style="color:#0a7a78;">params</td><td>press <kbd style="color:#0a7a78;border-color:#70c0be;background:#eaf8f8;">fx</kbd> = cycle Pitch+Formant ↔ Start+Speed</td></tr>
+            <tr><td style="color:#0a7a78;">fx 9–15</td><td>Stutter Sweep · Trance Gate · Half Rate · 16-Bar Build · 6/8 · Retrigger · Reverse</td></tr>
+            <tr><td style="color:#0a7a78;">transpose</td><td>hold <kbd style="color:#0a7a78;border-color:#70c0be;background:#eaf8f8;">ptn</kbd>+knob A = key · knob B = scale</td></tr>
+            <tr><td style="color:#0a7a78;">sync</td><td><kbd style="color:#0a7a78;border-color:#70c0be;background:#eaf8f8;">rec</kbd>+<kbd style="color:#0a7a78;border-color:#70c0be;background:#eaf8f8;">bpm</kbd> · chain: 64 patterns</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /col 3 -->
+
+  </div>
+
+  <div class="ftr">
+    <span>pocket operators master cheatsheet · page 2 of 2 — model guide</span>
+    <span>teenage.engineering · full details at teenage.engineering/guides/po-xx/en</span>
+  </div>
+
+</div>
+
+</body>
+</html>

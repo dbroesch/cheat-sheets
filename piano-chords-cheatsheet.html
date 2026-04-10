@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>piano chord reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
+  :root {
+    --p:  #1a3a6e;
+    --pd: #0e2448;
+    --pb: #a8bcd6;
+    --pt: #eef2fa;
+    --pl: #d0dff0;
+    --g:  #6b6b6b;
+    --bk: #1a1a1a;
+    --wh: #ffffff;
+    --acc: #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 7.5pt;
+    color: var(--bk);
+    background: var(--wh);
+    line-height: 1.4;
+  }
+
+  @page { size: letter landscape; margin: 10mm 12mm; }
+
+  .page { display: block; width: 100%; }
+
+  /* HEADER */
+  .hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--p);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .hdr-t { font-size: 18pt; font-weight: 600; color: var(--p); letter-spacing: -0.5px; line-height: 1; }
+  .hdr-s { font-size: 7pt; color: var(--g); letter-spacing: 1px; text-transform: uppercase; }
+  .hdr-r { font-size: 6.5pt; color: var(--g); text-align: right; }
+
+  /* FOOTER */
+  .ftr {
+    margin-top: 5px;
+    border-top: 1px solid var(--pb);
+    padding-top: 3px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 6pt;
+    color: var(--g);
+  }
+
+  /* SECTION */
+  .section {
+    display: block;
+    width: 100%;
+    background: var(--wh);
+    border: 1px solid var(--pb);
+    border-radius: 2px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .sh {
+    background: var(--p);
+    color: var(--wh);
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 6px;
+  }
+  .sh.acc { background: var(--acc); }
+  .sh.lt { background: var(--pt); color: var(--p); }
+  .sb { padding: 4px 6px; }
+
+  /* H4 */
+  h4 {
+    font-size: 6.5pt; font-weight: 600; color: var(--p);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin: 4px 0 2px; break-after: avoid; page-break-after: avoid;
+  }
+  h4:first-child { margin-top: 0; }
+
+  .sm { font-size: 6pt; color: var(--g); }
+
+  /* NOTE */
+  .note {
+    background: var(--pt); border-left: 2px solid var(--p);
+    padding: 3px 5px; font-size: 6.5pt; color: var(--g); margin-top: 3px;
+  }
+  .note.acc { border-left-color: var(--acc); }
+
+  /* FLEX ROW */
+  .col-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .c25 { flex: 1;    min-width: 0; }
+  .c33 { flex: 1.33; min-width: 0; }
+  .c50 { flex: 2;    min-width: 0; }
+
+  /* CHORD MASTER TABLE */
+  .chord-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 5.5pt;
+    table-layout: fixed;
+  }
+  .chord-table th, .chord-table td {
+    padding: 2px 3px;
+    border: 1px solid var(--pl);
+    vertical-align: middle;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .chord-table thead tr th {
+    background: var(--pt);
+    color: var(--p);
+    font-weight: 600;
+    font-size: 6pt;
+    letter-spacing: 0.5px;
+    border-color: var(--pb);
+  }
+  /* root note header row */
+  .chord-table .root-th {
+    background: var(--p);
+    color: var(--wh);
+    font-size: 6pt;
+    font-weight: 600;
+    border-color: var(--pd);
+  }
+  /* chord name + formula column */
+  .chord-table .name-col {
+    text-align: left;
+    width: 14%;
+    background: var(--pt);
+    border-right: 2px solid var(--pb);
+    font-size: 6pt;
+  }
+  .chord-table .name-col .cn {
+    font-weight: 600;
+    color: var(--p);
+    display: block;
+  }
+  .chord-table .name-col .cf {
+    color: var(--g);
+    font-size: 5pt;
+    display: block;
+  }
+  /* alternating section bands */
+  .chord-table tr.band-a td { background: #f8fafd; }
+  .chord-table tr.band-b td { background: var(--wh); }
+  /* black key notes */
+  .bk-note { color: #444; font-weight: 600; }
+  /* separator between chord families */
+  .chord-table tr.sep td, .chord-table tr.sep th {
+    background: var(--p);
+    color: var(--wh);
+    font-size: 6pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 2px 6px;
+    border-color: var(--pd);
+  }
+
+  /* FINGER TABLE */
+  .finger-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 6.5pt;
+  }
+  .finger-table td, .finger-table th {
+    padding: 2px 4px;
+    border-bottom: 1px solid var(--pl);
+    vertical-align: top;
+  }
+  .finger-table tr:last-child td { border-bottom: none; }
+  .finger-table th {
+    background: var(--pt);
+    color: var(--p);
+    font-weight: 600;
+    font-size: 6pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--pb);
+  }
+  .finger-table td:first-child { color: var(--p); font-weight: 600; white-space: nowrap; }
+
+  /* KEYBOARD DIAGRAM */
+  .keyboard {
+    display: flex;
+    align-items: flex-start;
+    padding: 4px 6px 2px;
+    gap: 0;
+    position: relative;
+    height: 28px;
+    overflow: visible;
+  }
+  .wkey {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 20px;
+    height: 24px;
+    background: var(--wh);
+    border: 1px solid var(--pb);
+    border-radius: 0 0 2px 2px;
+    font-size: 5pt;
+    font-weight: 600;
+    color: var(--p);
+    padding-bottom: 1px;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+  .bkey {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 12px;
+    height: 15px;
+    background: var(--bk);
+    border-radius: 0 0 2px 2px;
+    font-size: 4pt;
+    color: #fff;
+    padding-bottom: 1px;
+    position: relative;
+    z-index: 2;
+    margin-left: -6px;
+    margin-right: -6px;
+    flex-shrink: 0;
+  }
+  .key-label {
+    font-size: 4.5pt;
+    color: var(--g);
+    text-align: center;
+    padding: 0 0 2px;
+    line-height: 1.2;
+  }
+
+  /* SPEC LIST */
+  .sl { list-style: none; }
+  .sl li {
+    display: flex; justify-content: space-between;
+    padding: 1.5px 0; border-bottom: 1px solid var(--pl);
+    font-size: 6.5pt; gap: 6px;
+  }
+  .sl li:last-child { border-bottom: none; }
+  .sl .k { color: var(--g); }
+  .sl .v { font-weight: 500; text-align: right; }
+
+  kbd {
+    display: inline-block;
+    background: var(--pt); border: 1px solid var(--pb); border-radius: 2px;
+    padding: 0 3px; font-size: 6.5pt; font-family: inherit;
+    color: var(--pd); font-weight: 600; line-height: 1.5; white-space: nowrap;
+  }
+
+  /* interval pill */
+  .iv {
+    display: inline-block;
+    background: var(--p); color: white;
+    border-radius: 2px; padding: 0px 3px;
+    font-size: 5pt; font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .iv.acc { background: var(--acc); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ PAGE 1: TRIADS + SUS ═══════════════ -->
+<div class="page">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">piano chord reference</div>
+      <div class="hdr-s">all standard chords · all 12 roots · root position</div>
+    </div>
+    <div class="hdr-r">triads · suspended · page 1 of 2</div>
+  </div>
+
+  <div class="col-row" style="margin-bottom:6px;">
+
+    <!-- LEFT: keyboard + how to read -->
+    <div class="c33">
+      <div class="section">
+        <div class="sh">keyboard layout (one octave)</div>
+        <div class="keyboard">
+          <div class="wkey">C</div>
+          <div class="bkey">C#<br>D♭</div>
+          <div class="wkey">D</div>
+          <div class="bkey">D#<br>E♭</div>
+          <div class="wkey">E</div>
+          <div class="wkey">F</div>
+          <div class="bkey">F#<br>G♭</div>
+          <div class="wkey">G</div>
+          <div class="bkey">G#<br>A♭</div>
+          <div class="wkey">A</div>
+          <div class="bkey">A#<br>B♭</div>
+          <div class="wkey">B</div>
+          <div class="wkey" style="color:var(--g);">C</div>
+        </div>
+        <div class="note" style="margin:2px 5px 4px;">white keys: C D E F G A B · black keys: C# D# F# G# A# (also written as D♭ E♭ G♭ A♭ B♭)</div>
+      </div>
+
+      <div class="section">
+        <div class="sh">standard right hand fingering</div>
+        <div class="sb">
+          <table class="finger-table">
+            <tr><th>chord type</th><th>white root</th><th>black root</th></tr>
+            <tr><td>triad (3 notes)</td><td>1 – 3 – 5</td><td>2 – 3 – 5</td></tr>
+            <tr><td>4-note chord</td><td>1 – 2 – 4 – 5</td><td>1 – 2 – 3 – 5</td></tr>
+            <tr><td>sus2 / sus4</td><td>1 – 2 – 5</td><td>2 – 3 – 5</td></tr>
+          </table>
+          <div class="note" style="margin-top:3px;">fingers: 1=thumb · 2=index · 3=middle · 4=ring · 5=pinky<br>left hand (root pos): reverse → 5–3–1 for triads</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sh">chord construction intervals</div>
+        <div class="sb">
+          <table class="finger-table">
+            <tr><th>chord</th><th>symbol</th><th>formula (semitones)</th></tr>
+            <tr><td>Major</td><td>M / maj</td><td>root + 4 + 3</td></tr>
+            <tr><td>Minor</td><td>m / min</td><td>root + 3 + 4</td></tr>
+            <tr><td>Augmented</td><td>aug / +</td><td>root + 4 + 4</td></tr>
+            <tr><td>Diminished</td><td>dim / °</td><td>root + 3 + 3</td></tr>
+            <tr><td>Sus2</td><td>sus2</td><td>root + 2 + 5</td></tr>
+            <tr><td>Sus4</td><td>sus4</td><td>root + 5 + 2</td></tr>
+            <tr><td>Major 7</td><td>maj7 / M7</td><td>root + 4 + 3 + 4</td></tr>
+            <tr><td>Dominant 7</td><td>7</td><td>root + 4 + 3 + 3</td></tr>
+            <tr><td>Minor 7</td><td>m7</td><td>root + 3 + 4 + 3</td></tr>
+            <tr><td>Dim 7</td><td>dim7 / °7</td><td>root + 3 + 3 + 3</td></tr>
+            <tr><td>Half-dim 7</td><td>ø7 / m7♭5</td><td>root + 3 + 3 + 4</td></tr>
+            <tr><td>Minor Maj7</td><td>mM7</td><td>root + 3 + 4 + 4</td></tr>
+            <tr><td>Major 6</td><td>M6 / 6</td><td>root + 4 + 3 + 2</td></tr>
+            <tr><td>Minor 6</td><td>m6</td><td>root + 3 + 4 + 2</td></tr>
+          </table>
+          <div class="note" style="margin-top:3px;">aug & dim triads are symmetric — only 3 unique aug shapes (C/E/G#), 3 unique dim shapes exist</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Triad tables -->
+    <div class="c50" style="flex: 2.66;">
+      <div class="section">
+        <div class="sh">triads &amp; suspended chords — all roots</div>
+        <div class="sb" style="padding:0;">
+          <table class="chord-table">
+            <thead>
+              <tr>
+                <th class="name-col" style="background:var(--p); color:white; border-color:var(--pd);">chord</th>
+                <th class="root-th">C</th>
+                <th class="root-th">C# / D♭</th>
+                <th class="root-th">D</th>
+                <th class="root-th">D# / E♭</th>
+                <th class="root-th">E</th>
+                <th class="root-th">F</th>
+                <th class="root-th">F# / G♭</th>
+                <th class="root-th">G</th>
+                <th class="root-th">G# / A♭</th>
+                <th class="root-th">A</th>
+                <th class="root-th">A# / B♭</th>
+                <th class="root-th">B</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- TRIADS separator -->
+              <tr class="sep"><td colspan="13">triads</td></tr>
+
+              <!-- MAJOR -->
+              <tr class="band-a">
+                <td class="name-col"><span class="cn">Major</span><span class="cf">1 · 3 · 5</span></td>
+                <td>C E G</td>
+                <td>C# F G#</td>
+                <td>D F# A</td>
+                <td>E♭ G B♭</td>
+                <td>E G# B</td>
+                <td>F A C</td>
+                <td>F# A# C#</td>
+                <td>G B D</td>
+                <td>A♭ C E♭</td>
+                <td>A C# E</td>
+                <td>B♭ D F</td>
+                <td>B D# F#</td>
+              </tr>
+
+              <!-- MINOR -->
+              <tr class="band-b">
+                <td class="name-col"><span class="cn">Minor</span><span class="cf">1 · ♭3 · 5</span></td>
+                <td>C E♭ G</td>
+                <td>C# E G#</td>
+                <td>D F A</td>
+                <td>E♭ G♭ B♭</td>
+                <td>E G B</td>
+                <td>F A♭ C</td>
+                <td>F# A C#</td>
+                <td>G B♭ D</td>
+                <td>A♭ B E♭</td>
+                <td>A C E</td>
+                <td>B♭ D♭ F</td>
+                <td>B D F#</td>
+              </tr>
+
+              <!-- AUGMENTED -->
+              <tr class="band-a">
+                <td class="name-col"><span class="cn">Augmented</span><span class="cf">1 · 3 · ♯5</span></td>
+                <td>C E G#</td>
+                <td>C# F A</td>
+                <td>D F# A#</td>
+                <td>E♭ G B</td>
+                <td>E G# C</td>
+                <td>F A C#</td>
+                <td>F# A# D</td>
+                <td>G B D#</td>
+                <td>A♭ C E</td>
+                <td>A C# F</td>
+                <td>B♭ D F#</td>
+                <td>B D# G</td>
+              </tr>
+
+              <!-- DIMINISHED -->
+              <tr class="band-b">
+                <td class="name-col"><span class="cn">Diminished</span><span class="cf">1 · ♭3 · ♭5</span></td>
+                <td>C E♭ G♭</td>
+                <td>C# E G</td>
+                <td>D F A♭</td>
+                <td>E♭ G♭ A</td>
+                <td>E G B♭</td>
+                <td>F A♭ B</td>
+                <td>F# A C</td>
+                <td>G B♭ D♭</td>
+                <td>A♭ B D</td>
+                <td>A C E♭</td>
+                <td>B♭ D♭ E</td>
+                <td>B D F</td>
+              </tr>
+
+              <!-- SUS separator -->
+              <tr class="sep"><td colspan="13">suspended</td></tr>
+
+              <!-- SUS2 -->
+              <tr class="band-a">
+                <td class="name-col"><span class="cn">Sus2</span><span class="cf">1 · 2 · 5</span></td>
+                <td>C D G</td>
+                <td>C# D# G#</td>
+                <td>D E A</td>
+                <td>E♭ F B♭</td>
+                <td>E F# B</td>
+                <td>F G C</td>
+                <td>F# G# C#</td>
+                <td>G A D</td>
+                <td>A♭ B♭ E♭</td>
+                <td>A B E</td>
+                <td>B♭ C F</td>
+                <td>B C# F#</td>
+              </tr>
+
+              <!-- SUS4 -->
+              <tr class="band-b">
+                <td class="name-col"><span class="cn">Sus4</span><span class="cf">1 · 4 · 5</span></td>
+                <td>C F G</td>
+                <td>C# F# G#</td>
+                <td>D G A</td>
+                <td>E♭ A♭ B♭</td>
+                <td>E A B</td>
+                <td>F B♭ C</td>
+                <td>F# B C#</td>
+                <td>G C D</td>
+                <td>A♭ D♭ E♭</td>
+                <td>A D E</td>
+                <td>B♭ E♭ F</td>
+                <td>B E F#</td>
+              </tr>
+
+              <!-- 6TH separator -->
+              <tr class="sep"><td colspan="13">sixth chords</td></tr>
+
+              <!-- MAJOR 6 -->
+              <tr class="band-a">
+                <td class="name-col"><span class="cn">Major 6</span><span class="cf">1 · 3 · 5 · 6</span></td>
+                <td>C E G A</td>
+                <td>C# F G# A#</td>
+                <td>D F# A B</td>
+                <td>E♭ G B♭ C</td>
+                <td>E G# B C#</td>
+                <td>F A C D</td>
+                <td>F# A# C# D#</td>
+                <td>G B D E</td>
+                <td>A♭ C E♭ F</td>
+                <td>A C# E F#</td>
+                <td>B♭ D F G</td>
+                <td>B D# F# G#</td>
+              </tr>
+
+              <!-- MINOR 6 -->
+              <tr class="band-b">
+                <td class="name-col"><span class="cn">Minor 6</span><span class="cf">1 · ♭3 · 5 · 6</span></td>
+                <td>C E♭ G A</td>
+                <td>C# E G# A#</td>
+                <td>D F A B</td>
+                <td>E♭ G♭ B♭ C</td>
+                <td>E G B C#</td>
+                <td>F A♭ C D</td>
+                <td>F# A C# D#</td>
+                <td>G B♭ D E</td>
+                <td>A♭ B E♭ F</td>
+                <td>A C E F#</td>
+                <td>B♭ D♭ F G</td>
+                <td>B D F# G#</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /col-row -->
+
+  <div class="ftr">
+    <span>piano chord reference · page 1 of 2 · triads, suspended &amp; sixth chords</span>
+    <span>all chords shown in root position · enharmonic equivalents apply</span>
+  </div>
+
+</div><!-- /page 1 -->
+
+<!-- ═══════════════ PAGE 2: 7TH CHORDS + INVERSIONS ═══════════════ -->
+<div class="page" style="break-before:page; page-break-before:always;">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">piano chord reference</div>
+      <div class="hdr-s">seventh chords · all 12 roots · root position</div>
+    </div>
+    <div class="hdr-r">page 2 of 2</div>
+  </div>
+
+  <div class="col-row" style="margin-bottom:6px;">
+
+    <!-- MAIN: 7th chord tables -->
+    <div style="flex: 3.5; min-width: 0;">
+      <div class="section">
+        <div class="sh">seventh chords — all roots</div>
+        <div class="sb" style="padding:0;">
+          <table class="chord-table">
+            <thead>
+              <tr>
+                <th class="name-col" style="background:var(--p); color:white; border-color:var(--pd);">chord</th>
+                <th class="root-th">C</th>
+                <th class="root-th">C# / D♭</th>
+                <th class="root-th">D</th>
+                <th class="root-th">D# / E♭</th>
+                <th class="root-th">E</th>
+                <th class="root-th">F</th>
+                <th class="root-th">F# / G♭</th>
+                <th class="root-th">G</th>
+                <th class="root-th">G# / A♭</th>
+                <th class="root-th">A</th>
+                <th class="root-th">A# / B♭</th>
+                <th class="root-th">B</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!-- DOMINANT 7 -->
+              <tr class="band-a">
+                <td class="name-col"><span class="cn">Dominant 7</span><span class="cf">1 · 3 · 5 · ♭7</span></td>
+                <td>C E G B♭</td>
+                <td>C# F G# B</td>
+                <td>D F# A C</td>
+                <td>E♭ G B♭ D♭</td>
+                <td>E G# B D</td>
+                <td>F A C E♭</td>
+                <td>F# A# C# E</td>
+                <td>G B D F</td>
+                <td>A♭ C E♭ G♭</td>
+                <td>A C# E G</td>
+                <td>B♭ D F A♭</td>
+                <td>B D# F# A</td>
+              </tr>
+
+              <!-- MAJOR 7 -->
+              <tr class="band-b">
+                <td class="name-col"><span class="cn">Major 7</span><span class="cf">1 · 3 · 5 · 7</span></td>
+                <td>C E G B</td>
+                <td>C# F G# C</td>
+                <td>D F# A C#</td>
+                <td>E♭ G B♭ D</td>
+                <td>E G# B D#</td>
+                <td>F A C E</td>
+                <td>F# A# C# F</td>
+                <td>G B D F#</td>
+                <td>A♭ C E♭ G</td>
+                <td>A C# E G#</td>
+                <td>B♭ D F A</td>
+                <td>B D# F# A#</td>
+              </tr>
+
+              <!-- MINOR 7 -->
+              <tr class="band-a">
+                <td class="name-col"><span class="cn">Minor 7</span><span class="cf">1 · ♭3 · 5 · ♭7</span></td>
+                <td>C E♭ G B♭</td>
+                <td>C# E G# B</td>
+                <td>D F A C</td>
+                <td>E♭ G♭ B♭ D♭</td>
+                <td>E G B D</td>
+                <td>F A♭ C E♭</td>
+                <td>F# A C# E</td>
+                <td>G B♭ D F</td>
+                <td>A♭ B E♭ G♭</td>
+                <td>A C E G</td>
+                <td>B♭ D♭ F A♭</td>
+                <td>B D F# A</td>
+              </tr>
+
+              <!-- DIMINISHED 7 -->
+              <tr class="band-b">
+                <td class="name-col"><span class="cn">Diminished 7</span><span class="cf">1 · ♭3 · ♭5 · ♭♭7</span></td>
+                <td>C E♭ G♭ A</td>
+                <td>C# E G B♭</td>
+                <td>D F A♭ B</td>
+                <td>E♭ G♭ A C</td>
+                <td>E G B♭ D♭</td>
+                <td>F A♭ B D</td>
+                <td>F# A C E♭</td>
+                <td>G B♭ D♭ E</td>
+                <td>A♭ B D F</td>
+                <td>A C E♭ G♭</td>
+                <td>B♭ D♭ E G</td>
+                <td>B D F A♭</td>
+              </tr>
+
+              <!-- HALF-DIMINISHED -->
+              <tr class="band-a">
+                <td class="name-col"><span class="cn">Half-dim ø7</span><span class="cf">1 · ♭3 · ♭5 · ♭7</span></td>
+                <td>C E♭ G♭ B♭</td>
+                <td>C# E G B</td>
+                <td>D F A♭ C</td>
+                <td>E♭ G♭ A D♭</td>
+                <td>E G B♭ D</td>
+                <td>F A♭ B E♭</td>
+                <td>F# A C E</td>
+                <td>G B♭ D♭ F</td>
+                <td>A♭ B D G♭</td>
+                <td>A C E♭ G</td>
+                <td>B♭ D♭ E A♭</td>
+                <td>B D F A</td>
+              </tr>
+
+              <!-- MINOR MAJOR 7 -->
+              <tr class="band-b">
+                <td class="name-col"><span class="cn">Minor Maj7</span><span class="cf">1 · ♭3 · 5 · 7</span></td>
+                <td>C E♭ G B</td>
+                <td>C# E G# C</td>
+                <td>D F A C#</td>
+                <td>E♭ G♭ B♭ D</td>
+                <td>E G B D#</td>
+                <td>F A♭ C E</td>
+                <td>F# A C# F</td>
+                <td>G B♭ D F#</td>
+                <td>A♭ B E♭ G</td>
+                <td>A C E G#</td>
+                <td>B♭ D♭ F A</td>
+                <td>B D F# A#</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Inversions + tips -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">chord inversions</div>
+        <div class="sb">
+          <h4>triad inversions</h4>
+          <table class="finger-table">
+            <tr><th>position</th><th>notes (C major)</th><th>R.H. fingers</th></tr>
+            <tr><td>Root</td><td>C · E · G</td><td>1 – 3 – 5</td></tr>
+            <tr><td>1st inv.</td><td>E · G · C</td><td>1 – 2 – 5</td></tr>
+            <tr><td>2nd inv.</td><td>G · C · E</td><td>1 – 3 – 5</td></tr>
+          </table>
+          <h4>7th chord inversions</h4>
+          <table class="finger-table">
+            <tr><th>position</th><th>notes (Cmaj7)</th><th>R.H. fingers</th></tr>
+            <tr><td>Root</td><td>C E G B</td><td>1–2–4–5</td></tr>
+            <tr><td>1st inv.</td><td>E G B C</td><td>1–2–4–5</td></tr>
+            <tr><td>2nd inv.</td><td>G B C E</td><td>1–2–3–5</td></tr>
+            <tr><td>3rd inv.</td><td>B C E G</td><td>1–2–4–5</td></tr>
+          </table>
+          <div class="note" style="margin-top:3px;">inversions keep the same notes, just reorder starting from a different note in the chord</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sh">enharmonic equivalents</div>
+        <div class="sb">
+          <table class="finger-table">
+            <tr><th>sharp</th><th>=</th><th>flat</th></tr>
+            <tr><td>C#</td><td>=</td><td>D♭</td></tr>
+            <tr><td>D#</td><td>=</td><td>E♭</td></tr>
+            <tr><td>F#</td><td>=</td><td>G♭</td></tr>
+            <tr><td>G#</td><td>=</td><td>A♭</td></tr>
+            <tr><td>A#</td><td>=</td><td>B♭</td></tr>
+            <tr><td>E#</td><td>=</td><td>F</td></tr>
+            <tr><td>B#</td><td>=</td><td>C</td></tr>
+          </table>
+          <div class="note" style="margin-top:3px;">same key on piano, different name depending on key signature context</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sh acc">quick tips</div>
+        <div class="sb">
+          <h4>dim7 symmetry</h4>
+          <div class="sm" style="margin-bottom:3px;">dim7 chords repeat every 3 semitones. Only 3 unique dim7 shapes exist:<br>C°7 = E♭°7 = G♭°7 = A°7<br>C#°7 = E°7 = G°7 = B♭°7<br>D°7 = F°7 = A♭°7 = B°7</div>
+          <h4>aug symmetry</h4>
+          <div class="sm" style="margin-bottom:3px;">aug triads repeat every 4 semitones. Only 4 unique shapes:<br>Caug = Eaug = G#aug<br>C#aug = Faug = Aaug<br>Daug = F#aug = A#aug<br>E♭aug = Gaug = Baug</div>
+          <h4>dom7 → resolution</h4>
+          <div class="sm">G7 resolves to C · D7 resolves to G · A7 resolves to D (dominant → tonic, a 5th down)</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /col-row -->
+
+  <div class="ftr">
+    <span>piano chord reference · page 2 of 2 · seventh chords &amp; inversions</span>
+    <span>all chords shown in root position · ♭♭7 in dim7 = same pitch as major 6th · enharmonic equivalents apply</span>
+  </div>
+
+</div><!-- /page 2 -->
+
+</body>
+</html>

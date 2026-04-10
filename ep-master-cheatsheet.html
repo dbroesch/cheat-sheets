@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ep series — master cheatsheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
+  :root {
+    --p:  #1e3058;
+    --pd: #0f1a38;
+    --pb: #8098c0;
+    --pt: #e8eef8;
+    --pl: #c8d4e8;
+    --g:  #6b6b6b;
+    --bk: #1a1a1a;
+    --wh: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 7.5pt;
+    color: var(--bk);
+    background: var(--wh);
+    line-height: 1.4;
+  }
+
+  @page { size: letter landscape; margin: 10mm 12mm; }
+
+  .page { display: block; width: 100%; }
+
+  .col-row {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .c25 { flex: 1;    min-width: 0; }
+  .c33 { flex: 1.33; min-width: 0; }
+  .c50 { flex: 2;    min-width: 0; }
+
+  .section {
+    display: block;
+    width: 100%;
+    background: var(--wh);
+    border: 1px solid var(--pb);
+    border-radius: 2px;
+    margin-bottom: 6px;
+    overflow: hidden;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .sh {
+    background: var(--p);
+    color: var(--wh);
+    font-size: 6.5pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 6px;
+  }
+  .sb { padding: 4px 6px; }
+
+  .hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--p);
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+  }
+  .hdr-t { font-size: 18pt; font-weight: 600; color: var(--p); letter-spacing: -0.5px; line-height: 1; }
+  .hdr-s { font-size: 7pt; color: var(--g); letter-spacing: 1px; text-transform: uppercase; }
+  .hdr-r { font-size: 6.5pt; color: var(--g); text-align: right; }
+
+  .ftr {
+    margin-top: 5px;
+    border-top: 1px solid var(--pb);
+    padding-top: 3px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 6pt;
+    color: var(--g);
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 7pt; table-layout: fixed; }
+  td, th { padding: 1.5px 4px; vertical-align: top; border-bottom: 1px solid var(--pl); overflow-wrap: break-word; word-break: break-word; }
+  tr:last-child td { border-bottom: none; }
+  th {
+    color: var(--p); font-weight: 600; font-size: 6pt;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    background: var(--pt); border-bottom: 1px solid var(--pb);
+  }
+  td:first-child { color: var(--p); font-weight: 500; white-space: nowrap; padding-right: 5px; }
+
+  kbd {
+    display: inline-block;
+    background: var(--pt); border: 1px solid var(--pb); border-radius: 2px;
+    padding: 0 3px; font-size: 6.5pt; font-family: inherit;
+    color: var(--pd); font-weight: 600; line-height: 1.5; white-space: nowrap;
+  }
+
+  .note {
+    background: var(--pt); border-left: 2px solid var(--p);
+    padding: 3px 5px; font-size: 6.5pt; color: var(--g); margin-top: 3px;
+  }
+
+  .sl { list-style: none; }
+  .sl li { display: flex; justify-content: space-between; padding: 1.5px 0; border-bottom: 1px solid var(--pl); font-size: 6.5pt; gap: 6px; }
+  .sl li:last-child { border-bottom: none; }
+  .sl .k { color: var(--g); }
+  .sl .v { font-weight: 500; text-align: right; }
+
+  h4 {
+    font-size: 6.5pt; font-weight: 600; color: var(--p);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin: 4px 0 2px; break-after: avoid; page-break-after: avoid;
+  }
+  h4:first-child { margin-top: 0; }
+
+  /* MODEL CARDS */
+  .mc { margin-bottom: 6px; break-inside: avoid; page-break-inside: avoid; }
+  .mch {
+    color: var(--wh); font-size: 6.5pt; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 6px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-radius: 2px 2px 0 0;
+  }
+  .mch-tag { font-size: 5pt; opacity: 0.85; font-weight: 400; letter-spacing: 0.8px; }
+  .mcb { border: 1px solid #ccc; border-top: none; border-radius: 0 0 2px 2px; padding: 3px 5px; }
+  .mct { width: 100%; border-collapse: collapse; font-size: 6pt; table-layout: fixed; }
+  .mct td { padding: 1.5px 3px; border-bottom: 1px solid #eee; vertical-align: top; overflow-wrap: break-word; word-break: break-word; color: var(--bk); font-weight: 400; white-space: normal; }
+  .mct tr:last-child td { border-bottom: none; }
+  .mct td:first-child { font-weight: 600; width: 26%; white-space: nowrap; padding-right: 4px; }
+  .mcsh {
+    font-size: 5pt; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.8px; padding: 2px 3px 1px; margin-top: 2px;
+  }
+  .mkg8 {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 2px; padding: 2px 3px 3px;
+  }
+  .mkg4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2px; padding: 2px 3px 3px;
+  }
+  .mkc {
+    border: 1px solid #ddd; border-radius: 2px; padding: 1px 2px;
+    text-align: center; min-width: 0; overflow: hidden;
+  }
+  .mkn { font-size: 4pt; font-weight: 600; display: block; line-height: 1.3; }
+  .mkl { font-size: 4pt; color: #333; display: block; line-height: 1.3; }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COMMON FEATURES -->
+<div class="page">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">ep series</div>
+      <div class="hdr-s">common features — ep–40 · ep–1320 · ep–133</div>
+    </div>
+    <div class="hdr-r">teenage.engineering · master reference</div>
+  </div>
+
+  <div class="col-row">
+
+    <!-- COL 1: Common Controls -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">hardware controls — all ep models</div>
+        <div class="sb">
+          <ul class="sl">
+            <li><span class="k">groups A–D</span><span class="v">select group</span></li>
+            <li><span class="k">pads 1–12</span><span class="v">trigger / steps / numbers</span></li>
+            <li><span class="k">sound</span><span class="v">sound selection mode</span></li>
+            <li><span class="k">shift+sound</span><span class="v">sound edit mode</span></li>
+            <li><span class="k">main</span><span class="v">main / sequencer mode</span></li>
+            <li><span class="k">tempo</span><span class="v">BPM &amp; metronome</span></li>
+            <li><span class="k">record</span><span class="v">arm recording</span></li>
+            <li><span class="k">play</span><span class="v">play / stop</span></li>
+            <li><span class="k">shift</span><span class="v">modifier (alt functions)</span></li>
+            <li><span class="k">erase</span><span class="v">erase / delete</span></li>
+            <li><span class="k">sample</span><span class="v">sampling mode</span></li>
+            <li><span class="k">shift+sample</span><span class="v">chop mode</span></li>
+            <li><span class="k">timing</span><span class="v">note intervals &amp; swing</span></li>
+            <li><span class="k">shift+timing</span><span class="v">timing correct (per-pad)</span></li>
+            <li><span class="k">fx</span><span class="v">effects</span></li>
+            <li><span class="k">keys</span><span class="v">keyboard / scale mode</span></li>
+            <li><span class="k">fader</span><span class="v">volume / automation</span></li>
+            <li><span class="k">knob X / Y</span><span class="v">context-sensitive params</span></li>
+            <li><span class="k">minus / plus</span><span class="v">navigate / adjust</span></li>
+            <li><span class="k">enter</span><span class="v">confirm</span></li>
+          </ul>
+          <div class="note">ep-1320 uses unique button names (sonus, manus, codex, etc.) — see model card, page 2</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 2: Recording -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">live record</div>
+        <div class="sb">
+          <table>
+            <tr><td>tap <kbd>record</kbd> → <kbd>play</kbd></td><td>4-beat count-in → start recording</td></tr>
+            <tr><td><kbd>record</kbd>+<kbd>play</kbd></td><td>start immediately (no count-in)</td></tr>
+            <tr><td>hold <kbd>record</kbd>+pad</td><td>overdub pad to existing pattern</td></tr>
+            <tr><td>press <kbd>play</kbd></td><td>stop &amp; pause</td></tr>
+            <tr><td>press <kbd>record</kbd></td><td>continue playing (stop recording)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">step sequencer</div>
+        <div class="sb">
+          <table>
+            <tr><td>minus / plus</td><td>navigate steps (when stopped)</td></tr>
+            <tr><td><kbd>shift</kbd>+minus</td><td>jump to step 1.1.1 (pattern start)</td></tr>
+            <tr><td>hold <kbd>record</kbd>+pad</td><td>record pad to current step</td></tr>
+            <tr><td>hold <kbd>erase</kbd>+pad</td><td>delete notes on pad</td></tr>
+          </table>
+          <h4>pattern length</h4>
+          <table>
+            <tr><td>hold <kbd>record</kbd>+plus</td><td>extend pattern beyond 1 bar</td></tr>
+            <tr><td>max length</td><td>99 bars per group</td></tr>
+          </table>
+          <h4>note properties — hold shift + pad</h4>
+          <table>
+            <tr><td>knob X</td><td>velocity</td></tr>
+            <tr><td>knob Y</td><td>duration</td></tr>
+            <tr><td>minus / plus</td><td>nudge note timing (quantize or free time)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">erase &amp; undo</div>
+        <div class="sb">
+          <table>
+            <tr><td>hold <kbd>erase</kbd>+pad</td><td>erase notes on pad · hold long = all</td></tr>
+            <tr><td>hold <kbd>erase</kbd>+group</td><td>erase current pattern</td></tr>
+            <tr><td>hold <kbd>erase</kbd>+<kbd>main</kbd></td><td>erase current scene</td></tr>
+            <tr><td><kbd>shift</kbd>+<kbd>group B</kbd></td><td>undo</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 3: Functions -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">timing &amp; note intervals</div>
+        <div class="sb">
+          <table>
+            <tr><th>interval</th><th>steps / bar</th></tr>
+            <tr><td>1/8</td><td>8</td></tr>
+            <tr><td>1/8T</td><td>12 (triplet)</td></tr>
+            <tr><td>1/16</td><td>16</td></tr>
+            <tr><td>1/16T</td><td>24 (triplet)</td></tr>
+            <tr><td>1/32</td><td>32</td></tr>
+            <tr><td>knob X / Y</td><td>interval / swing</td></tr>
+            <tr><td>minus / plus</td><td>quantize / free time mode</td></tr>
+            <tr><td>hold <kbd>timing</kbd>+pad</td><td>note repeat</td></tr>
+            <tr><td><kbd>shift</kbd>+<kbd>timing</kbd></td><td>timing correct (per-pad quantize)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">loop — shift + tempo</div>
+        <div class="sb">
+          <table>
+            <tr><td>hold <kbd>shift</kbd>+<kbd>tempo</kbd></td><td>create loop (hold duration = length)</td></tr>
+            <tr><td>knob X</td><td>loop position (tempo-locked)</td></tr>
+            <tr><td>knob Y</td><td>loop length</td></tr>
+            <tr><td>press <kbd>tempo</kbd></td><td>exit loop immediately</td></tr>
+            <tr><td>press <kbd>main</kbd></td><td>exit loop at next bar boundary</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COL 4: Song Structure + Sync -->
+    <div class="c25">
+      <div class="section">
+        <div class="sh">song structure — all ep models</div>
+        <div class="sb">
+          <table>
+            <tr><td>projects</td><td>9 · independent compositions</td></tr>
+            <tr><td>groups A–D</td><td>4 per project · 12 sounds + 99 patterns each</td></tr>
+            <tr><td>patterns</td><td>99 per group · max 99 bars</td></tr>
+            <tr><td>scenes</td><td>99 · sections that make up a song</td></tr>
+            <tr><td>song positions</td><td>99 · chain scenes 1–99 in order</td></tr>
+          </table>
+          <h4>commit — shift + main (all models)</h4>
+          <table>
+            <tr><td><kbd>shift</kbd>+<kbd>main</kbd></td><td>commit: duplicate current scene, advance</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">sync &amp; connectivity — all models</div>
+        <div class="sb">
+          <table>
+            <tr><th>port</th><th>type</th></tr>
+            <tr><td>sync in / out</td><td>3.5mm · 1/8 · 1/16 · sync24</td></tr>
+            <tr><td>MIDI in / out</td><td>3.5mm TRS · notes, CC, clock, program</td></tr>
+            <tr><td>USB-C</td><td>MIDI host · firmware · sample transfer</td></tr>
+          </table>
+          <div class="note">sync to PO: EP out→PO in, PO→SY2 · from PO: PO out→EP in, PO→SY1</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">universal specs</div>
+        <div class="sb">
+          <ul class="sl">
+            <li><span class="k">power</span><span class="v">4 × AAA · or USB-C 5V / 1A</span></li>
+            <li><span class="k">BPM range</span><span class="v">40–399</span></li>
+            <li><span class="k">max pattern</span><span class="v">99 bars per group</span></li>
+            <li><span class="k">projects / scenes</span><span class="v">9 / 99</span></li>
+            <li><span class="k">storage</span><span class="v">128 MB · 999 sample slots (all models)</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ftr">
+    <span>ep series master cheatsheet · page 1 of 2 — common features</span>
+    <span>teenage.engineering · ep–40 · ep–1320 · ep–133</span>
+  </div>
+
+</div>
+
+<!-- PAGE 2: MODEL GUIDE -->
+<div class="page" style="break-before:page; page-break-before:always;">
+
+  <div class="hdr">
+    <div>
+      <div class="hdr-t">ep series</div>
+      <div class="hdr-s">model guide — unique features per device</div>
+    </div>
+    <div class="hdr-r">page 2 of 2</div>
+  </div>
+
+  <div class="col-row">
+
+    <!-- COL 1: EP-40 -->
+    <div class="c33">
+
+      <div class="mc">
+        <div class="mch" style="background:#00503a;"><span>ep–40 riddim</span><span class="mch-tag">128mb sampler &amp; composer</span></div>
+        <div class="mcb" style="border-color:#a0c8b8;">
+          <table class="mct">
+            <tr><td style="color:#00503a;">supertone</td><td>hold <kbd style="color:#00503a;border-color:#a0c8b8;background:#e8f4ef;">sound</kbd>+• = supertone sound engine (EP-40 exclusive) · sub-sounds 0–9 via pads</td></tr>
+            <tr><td style="color:#00503a;">play modes</td><td>oneshot · key (poly) · legato · loop (background sync — EP-40 exclusive)</td></tr>
+            <tr><td style="color:#00503a;">tempo match</td><td><kbd style="color:#00503a;border-color:#a0c8b8;background:#e8f4ef;">sample</kbd>+<kbd style="color:#00503a;border-color:#a0c8b8;background:#e8f4ef;">tempo</kbd> = auto-detect BPM of loaded sample</td></tr>
+            <tr><td style="color:#00503a;">compressor</td><td><kbd style="color:#00503a;border-color:#a0c8b8;background:#e8f4ef;">shift</kbd>+<kbd style="color:#00503a;border-color:#a0c8b8;background:#e8f4ef;">fx</kbd> = master compressor &amp; output settings</td></tr>
+            <tr><td style="color:#00503a;">sound edit+</td><td><kbd style="color:#00503a;border-color:#a0c8b8;background:#e8f4ef;">shift</kbd>+<kbd style="color:#00503a;border-color:#a0c8b8;background:#e8f4ef;">sound</kbd> hold 2s = save sound edits permanently</td></tr>
+            <tr><td style="color:#00503a;">fader reset</td><td><kbd style="color:#00503a;border-color:#a0c8b8;background:#e8f4ef;">shift</kbd>+<kbd style="color:#00503a;border-color:#a0c8b8;background:#e8f4ef;">fader</kbd> = reset fader to default (RES)</td></tr>
+            <tr><td style="color:#00503a;">storage</td><td>128 MB · 999 sample slots</td></tr>
+          </table>
+          <div class="mcsh" style="color:#00503a; border-top:1px solid #c0dcd0; margin-top:3px; padding-top:2px;">knob map by mode</div>
+          <table class="mct" style="font-size:5.5pt;">
+            <tr><td style="color:#00503a; width:26%;">sound</td><td>X: volume (AMP) · Y: pitch (PTC)</td></tr>
+            <tr><td style="color:#00503a;">sampling</td><td>X: input level · Y: threshold</td></tr>
+            <tr><td style="color:#00503a;">main</td><td>X: input volume · Y: route through FX</td></tr>
+            <tr><td style="color:#00503a;">tempo</td><td>X: BPM (40–399) · Y: metro volume</td></tr>
+            <tr><td style="color:#00503a;">timing</td><td>X: note interval · Y: swing</td></tr>
+            <tr><td style="color:#00503a;">chop</td><td>X: in point · Y: out point</td></tr>
+            <tr><td style="color:#00503a;">loop</td><td>X: loop length · Y: slide position</td></tr>
+            <tr><td style="color:#00503a;">step seq</td><td>hold shift+pad → X: velocity · Y: duration</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COL 2: EP-1320 -->
+    <div class="c33">
+
+      <div class="mc">
+        <div class="mch" style="background:#4a1800;"><span>ep–1320 medieval</span><span class="mch-tag">128mb sampler · 96mb medieval rom</span></div>
+        <div class="mcb" style="border-color:#c08060;">
+          <div class="mcsh" style="color:#4a1800;">button name reference (ep-1320 unique terminology)</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px 6px; padding:2px 3px 4px; font-size:5.5pt;">
+            <span style="color:#4a1800; font-weight:600;">sonus</span><span>sound</span>
+            <span style="color:#4a1800; font-weight:600;">manus</span><span>main</span>
+            <span style="color:#4a1800; font-weight:600;">tempus</span><span>tempo</span>
+            <span style="color:#4a1800; font-weight:600;">codex</span><span>record</span>
+            <span style="color:#4a1800; font-weight:600;">fabula</span><span>play</span>
+            <span style="color:#4a1800; font-weight:600;">altero</span><span>shift</span>
+            <span style="color:#4a1800; font-weight:600;">erado</span><span>erase</span>
+            <span style="color:#4a1800; font-weight:600;">demus</span><span>sample</span>
+            <span style="color:#4a1800; font-weight:600;">quantum</span><span>timing</span>
+            <span style="color:#4a1800; font-weight:600;">faedr</span><span>fader</span>
+            <span style="color:#4a1800; font-weight:600;">pocus</span><span>fx</span>
+            <span style="color:#4a1800; font-weight:600;">claves</span><span>keys</span>
+            <span style="color:#4a1800; font-weight:600;">intra</span><span>enter</span>
+            <span style="color:#4a1800; font-weight:600;">necto</span><span>loop (altero+tempus)</span>
+          </div>
+          <div class="mcsh" style="color:#4a1800; border-top:1px solid #d8c0a8; margin-top:2px; padding-top:3px;">rom sound library (sonus 1–220)</div>
+          <table class="mct">
+            <tr><td style="color:#4a1800;">1–69</td><td>drums</td></tr>
+            <tr><td style="color:#4a1800;">70–114</td><td>phrases</td></tr>
+            <tr><td style="color:#4a1800;">115–127</td><td>instruments</td></tr>
+            <tr><td style="color:#4a1800;">128–155</td><td>one shots</td></tr>
+            <tr><td style="color:#4a1800;">156–220</td><td>SFX / foley</td></tr>
+            <tr><td style="color:#4a1800;">221–999</td><td>user samples (up to 32 MB)</td></tr>
+          </table>
+          <div class="mcsh" style="color:#4a1800; border-top:1px solid #d8c0a8; margin-top:2px; padding-top:3px;">unique features</div>
+          <table class="mct">
+            <tr><td style="color:#4a1800;">scales (claves)</td><td>10 scale modes via system settings 310–319: 12T / maj / min / dor / phr / lyd / mix / loc / ma.p / mi.p</td></tr>
+            <tr><td style="color:#4a1800;">quantum correct</td><td><kbd style="color:#4a1800;border-color:#c08060;background:#f8f0e8;">altero</kbd>+<kbd style="color:#4a1800;border-color:#c08060;background:#f8f0e8;">quantum</kbd> = quantize individual pads (not full pattern)</td></tr>
+            <tr><td style="color:#4a1800;">pocus effects</td><td>7 effects · <kbd style="color:#4a1800;border-color:#c08060;background:#f8f0e8;">pocus</kbd> → faedr = send level · hold <kbd style="color:#4a1800;border-color:#c08060;background:#f8f0e8;">pocus</kbd>+pad = punch-in</td></tr>
+            <tr><td style="color:#4a1800;">faedr auto</td><td>hold <kbd style="color:#4a1800;border-color:#c08060;background:#f8f0e8;">codex</kbd>+faedr = record automation · hold group+faedr = project volume</td></tr>
+            <tr><td style="color:#4a1800;">lock mode</td><td>hold <kbd style="color:#4a1800;border-color:#c08060;background:#f8f0e8;">manus</kbd> at startup = read-only (prevents edits)</td></tr>
+            <tr><td style="color:#4a1800;">system codes</td><td>altero+erado → numeric code entry (100–411 range)</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COL 3: EP-133 -->
+    <div class="c33">
+
+      <div class="mc">
+        <div class="mch" style="background:#c04000;"><span>ep–133 k.o. ii</span><span class="mch-tag">128mb sampler · successor to po–33</span></div>
+        <div class="mcb" style="border-color:#e09060;">
+          <table class="mct">
+            <tr><td style="color:#c04000;">punch-in FX 2.0</td><td>hold <kbd style="color:#c04000;border-color:#e09060;background:#fdf0e8;">fx</kbd>+pad during playback = real-time effect on that pad · 6 built-in FX</td></tr>
+            <tr><td style="color:#c04000;">compressor</td><td><kbd style="color:#c04000;border-color:#e09060;background:#fdf0e8;">shift</kbd>+<kbd style="color:#c04000;border-color:#e09060;background:#fdf0e8;">fx</kbd> = master compressor · knob X = speed · knob Y = amount</td></tr>
+            <tr><td style="color:#c04000;">display</td><td>custom screen · 66 unique icons · one per feature</td></tr>
+            <tr><td style="color:#c04000;">storage</td><td>128 MB · 999 sample slots · ~50 min at 11 kHz mono</td></tr>
+            <tr><td style="color:#c04000;">sound slots</td><td>999 · assign specific slot: hold <kbd style="color:#c04000;border-color:#e09060;background:#fdf0e8;">sound</kbd>+pads (number)+<kbd style="color:#c04000;border-color:#e09060;background:#fdf0e8;">enter</kbd></td></tr>
+          </table>
+          <div class="mcsh" style="color:#c04000; border-top:1px solid #ecc8a8; margin-top:3px; padding-top:3px;">sync out modes (unique to ep-133)</div>
+          <table class="mct">
+            <tr><td style="color:#c04000;">dual 8th note</td><td>sync 2× pocket operators simultaneously via splitter cable</td></tr>
+            <tr><td style="color:#c04000;">16th (eurorack)</td><td>eurorack-style · start / reset on ring (right channel)</td></tr>
+            <tr><td style="color:#c04000;">sync24</td><td>vintage drum machines · requires 3.5mm-to-DIN adapter</td></tr>
+          </table>
+          <div class="mcsh" style="color:#c04000; border-top:1px solid #ecc8a8; margin-top:3px; padding-top:3px;">built-in effects (fx button)</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px 6px; padding:2px 3px 4px; font-size:5.5pt;">
+            <span>Delay</span><span>Reverb</span><span>Distortion</span>
+            <span>Chorus</span><span>Filter</span><span>Compressor</span>
+          </div>
+          <div class="mcsh" style="color:#c04000; border-top:1px solid #ecc8a8; margin-top:2px; padding-top:3px;">vs po-33 k.o! (predecessor)</div>
+          <table class="mct" style="font-size:5.5pt;">
+            <tr><td style="color:#c04000; width:26%;">memory</td><td>128 MB vs 40 sec total</td></tr>
+            <tr><td style="color:#c04000;">song mode</td><td>99 scenes + 99 song positions vs none</td></tr>
+            <tr><td style="color:#c04000;">MIDI</td><td>full MIDI in/out vs none</td></tr>
+            <tr><td style="color:#c04000;">sync</td><td>sync24 + Eurorack + USB vs 3.5mm only</td></tr>
+            <tr><td style="color:#c04000;">projects</td><td>9 full projects vs 1</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="ftr">
+    <span>ep series master cheatsheet · page 2 of 2 — model guide</span>
+    <span>teenage.engineering · ep–40 · ep–1320 · ep–133 · see individual guides for full detail</span>
+  </div>
+
+</div>
+
+</body>
+</html>

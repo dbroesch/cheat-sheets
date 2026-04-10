@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8">
+<title>Arturia MicroFreak Cheatsheet</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #c83200;
+  --tint: #fdf1ec;
+  --border: #e8b0a0;
+  --light: #f5dfd7;
+  --dark: #3a1a0e;
+}
+@page { size: letter landscape; margin: 10mm 12mm; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 7.5pt;
+  line-height: 1.4;
+  background: #ffffff;
+  color: #222222;
+}
+.page { width: 100%; }
+.col-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  width: 100%;
+}
+.c25 { flex: 1; min-width: 0; }
+.c33 { flex: 1.33; min-width: 0; }
+.c50 { flex: 2; min-width: 0; }
+.c66 { flex: 2.66; min-width: 0; }
+.section {
+  display: block;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin-bottom: 6px;
+}
+.sh {
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 6.5pt;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 6px;
+}
+.sb { padding: 4px 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 7pt; }
+td, th { padding: 1.5px 4px; vertical-align: top; border-bottom: 1px solid var(--light); overflow-wrap: break-word; word-break: break-word; }
+tr:last-child td { border-bottom: none; }
+th {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 6pt;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--tint);
+  border-bottom: 1px solid var(--border);
+}
+td:first-child { color: var(--primary); font-weight: 500; white-space: nowrap; }
+.plain td:first-child { color: inherit; font-weight: 400; white-space: normal; }
+kbd {
+  display: inline-block;
+  background: var(--tint);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 0px 3px;
+  font-size: 6.5pt;
+  font-family: inherit;
+  color: var(--dark);
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+h4 {
+  font-size: 6.5pt;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+  margin-top: 4px;
+  break-after: avoid;
+  page-break-after: avoid;
+}
+.note {
+  background: var(--tint);
+  border-left: 2px solid var(--primary);
+  padding: 3px 5px;
+  font-size: 6.5pt;
+  color: #6b6b6b;
+  margin-top: 3px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+.header-title { font-size: 18pt; font-weight: 600; color: var(--primary); letter-spacing: -0.5px; }
+.header-sub { font-size: 7pt; color: #6b6b6b; letter-spacing: 1px; text-transform: uppercase; }
+.footer {
+  margin-top: 6px;
+  border-top: 1px solid var(--border);
+  padding-top: 3px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 6pt;
+  color: #6b6b6b;
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: FRONT PANEL -->
+<div class="page">
+  <div class="header">
+    <div>
+      <div class="header-title">MicroFreak</div>
+      <div class="header-sub">Arturia · Firmware 5.0.1 · Quick Reference</div>
+    </div>
+    <div style="text-align:right"><div class="header-sub">page 1 of 6 · front panel</div></div>
+  </div>
+  <div class="col-row">
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">top panel controls</div>
+        <div class="sb">
+          <table>
+            <tr><td>Matrix Enc</td><td>Turn=nav 35 pts; press=edit amt; hold 0.5s=reset pt</td></tr>
+            <tr><td>Shift+Matrix long</td><td>Clear ALL matrix routings</td></tr>
+            <tr><td>Paraphonic</td><td>4-voice (shared filter, ind. VCAs+envs)</td></tr>
+            <tr><td>Shift+Para</td><td>Unison mode (all voices detune together)</td></tr>
+            <tr><td>Hold Para+chord</td><td>Paraphonic Chord Mode (intervals locked)</td></tr>
+            <tr><td>Panel</td><td>Sync knob positions to preset (use once)</td></tr>
+            <tr><td>Preset Enc</td><td>Browse 512 presets; triple-click=Init</td></tr>
+            <tr><td>Save</td><td>Enter save mode; long press=quick save</td></tr>
+            <tr><td>Utility</td><td>Global + preset config menu</td></tr>
+            <tr><td>Volume</td><td>Master output (line out + headphone)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">modulation matrix grid</div>
+        <div class="sb">
+          <h4>sources (rows 1–5)</h4>
+          <table>
+            <tr><td>1: CycEnv</td><td>Cycling Envelope output</td></tr>
+            <tr><td>2: ENV</td><td>Standard Envelope output</td></tr>
+            <tr><td>3: LFO</td><td>LFO output</td></tr>
+            <tr><td>4: Pressure</td><td>Keyboard pressure or velocity</td></tr>
+            <tr><td>5: Key/Arp</td><td>Keyboard, arp, and sequencer</td></tr>
+          </table>
+          <h4>destinations (columns)</h4>
+          <table>
+            <tr><td>1: Pitch</td><td>Hardwired</td></tr>
+            <tr><td>2: Wave</td><td>Hardwired</td></tr>
+            <tr><td>3: Timbre</td><td>Hardwired</td></tr>
+            <tr><td>4: Cutoff</td><td>Hardwired</td></tr>
+            <tr><td>5–7: Assign 1/2/3</td><td>User-assignable</td></tr>
+          </table>
+          <div class="note">Hold AssignX + turn knob = assign all 5 sources to that column at once</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">glide</div>
+        <div class="sb">
+          <table>
+            <tr><td>Glide knob</td><td>Portamento time 0 – ~10s</td></tr>
+            <tr><td>Time mode</td><td>Fixed glide time 0–10s</td></tr>
+            <tr><td>Sync mode</td><td>Tempo-synced glide</td></tr>
+            <tr><td>Rate mode</td><td>Rate-based 0–10ms/octave</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">digital oscillator</div>
+        <div class="sb">
+          <table>
+            <tr><td>Type</td><td>Selects model (22 types, see p.3). Modulatable</td></tr>
+            <tr><td>Wave</td><td>1st parameter (varies by type). Modulatable</td></tr>
+            <tr><td>Timbre</td><td>2nd parameter (varies by type). Modulatable</td></tr>
+            <tr><td>Shape</td><td>3rd parameter (varies by type). Modulatable</td></tr>
+          </table>
+          <div class="note">Shift+Wave/Timbre/Shape = reverse knob speed (Slow↔Fast)</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">analog filter (12 dB/oct)</div>
+        <div class="sb">
+          <table>
+            <tr><td>Cutoff</td><td>~30 Hz – &gt;15 kHz. CC#23</td></tr>
+            <tr><td>Resonance</td><td>Peak; max = self-oscillation (sine). CC#83</td></tr>
+            <tr><td>Filter Type</td><td>Cycles: LPF → BPF → HPF</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">signal flow</div>
+        <div class="sb">
+          <div style="font-size:7pt; line-height:1.7">
+            <div>1. <strong>Digital Oscillator</strong> → waveform</div>
+            <div>2. <strong>Analog Filter</strong> → 12 dB/oct LP/BP/HP</div>
+            <div>3. <strong>Analog VCA</strong></div>
+            <div style="padding-left:8pt;color:#666">Amp Mod OFF: gate = abrupt on/off</div>
+            <div style="padding-left:8pt;color:#666">Amp Mod ON: ENV shapes amplitude</div>
+            <div style="padding-left:8pt;color:#666">Paraphonic: digital VCA per voice</div>
+            <div>4. <strong>Main ENV</strong> → Filter Amt + VCA (Amp Mod ON)</div>
+            <div>5. <strong>Matrix</strong> → routes CycEnv/ENV/LFO/Pressure/Key</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">cycling envelope</div>
+        <div class="sb">
+          <table>
+            <tr><td>Rise</td><td>Attack time. CC#102. Shift+Rise=log/lin/exp</td></tr>
+            <tr><td>Fall</td><td>Decay time. CC#103. Shift+Fall=log/lin/exp</td></tr>
+            <tr><td>Hold</td><td>Hold/sustain level (Run/Loop). CC#28</td></tr>
+            <tr><td>Amount</td><td>Output attenuator → matrix. CC#24</td></tr>
+          </table>
+          <h4>modes (mode button)</h4>
+          <table>
+            <tr><td>ENV</td><td>Fires once per gate; sustains while held</td></tr>
+            <tr><td>RUN</td><td>Free-running LFO; resets on MIDI Start</td></tr>
+            <tr><td>LOOP</td><td>Retriggers on each keyboard/seq/arp gate</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">LFO</div>
+        <div class="sb">
+          <table>
+            <tr><th>Shape</th><th></th></tr>
+            <tr><td>Sine</td><td>Smooth cycle</td></tr>
+            <tr><td>Triangle</td><td>Linear rise/fall</td></tr>
+            <tr><td>Rising Saw</td><td>Linear rise, instant drop</td></tr>
+            <tr><td>Square</td><td>50% duty, abrupt transitions</td></tr>
+            <tr><td>Random</td><td>S&amp;H random steps</td></tr>
+            <tr><td>Rnd Glide</td><td>Smoothed random values</td></tr>
+          </table>
+          <div class="note">Rate: 0.06–100 Hz unsynced (CC#93) or 8/1–1/32 synced (CC#94). Press Rate enc = toggle sync. At 100 Hz = audio-rate FM.</div>
+          <div class="note">Retrig: Utility&gt;Preset&gt;LFO Retrig: Off/On/Legato</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">envelope generator (ADS)</div>
+        <div class="sb">
+          <table>
+            <tr><td>Attack</td><td>0 ms – 10 s. CC#105</td></tr>
+            <tr><td>Decay/Rel</td><td>0 ms – 13 s. CC#106</td></tr>
+            <tr><td>Sustain</td><td>Level while key held. CC#29</td></tr>
+            <tr><td>Filter Amt</td><td>Bipolar env→filter cutoff. CC#26</td></tr>
+            <tr><td>Amp Mod btn</td><td>ON=env shapes VCA; OFF=gate on/off</td></tr>
+          </table>
+          <div class="note">Utility&gt;Preset: Envelope Legato / Envelope Snap</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <span>Arturia MicroFreak — Firmware 5.0.1</span>
+    <span>Source: Arturia Manual v5.0.0 (July 2023)</span>
+    <span>Page 1 of 6</span>
+  </div>
+</div>
+
+<!-- PAGE 2: MORE HARDWARE -->
+<div class="page" style="break-before:page; page-break-before:always;">
+  <div class="header">
+    <div>
+      <div class="header-title">MicroFreak</div>
+      <div class="header-sub">Arturia · Firmware 5.0.1 · Quick Reference</div>
+    </div>
+    <div style="text-align:right"><div class="header-sub">page 2 of 6 · controls · keyboard · rear panel</div></div>
+  </div>
+  <div class="col-row">
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">arp/seq section</div>
+        <div class="sb">
+          <table>
+            <tr><td>Arp|Seq btn</td><td>Press=Arp (white); Shift+press=Seq</td></tr>
+            <tr><td>Oct|Mod btn</td><td>Arp: octave range 1–4; Seq: mod track 1–4</td></tr>
+            <tr><td>Rate knob</td><td>BPM/division; press=toggle sync. CC#91/92</td></tr>
+            <tr><td>Shift+Rate</td><td>Swing amount (50–75%)</td></tr>
+          </table>
+          <h4>arp patterns (icons when arp active)</h4>
+          <table>
+            <tr><td>Up|A</td><td>Ascending pitch order</td></tr>
+            <tr><td>Order|B</td><td>Order notes were pressed</td></tr>
+            <tr><td>Random|O</td><td>Random order</td></tr>
+            <tr><td>Pattern|&gt;</td><td>Semi-random; regenerates on note change</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">icon strip (above keyboard)</div>
+        <div class="sb">
+          <table>
+            <tr><td>Hold</td><td>Latch notes/arp; step rec=tie/rest; rec=erase</td></tr>
+            <tr><td>Up|A</td><td>Arp: ascending. Seq: Sequence A</td></tr>
+            <tr><td>Order|B</td><td>Arp: by order. Seq: Sequence B</td></tr>
+            <tr><td>Random|O</td><td>Arp: random. Seq: O = Record</td></tr>
+            <tr><td>Pattern|&gt;</td><td>Arp: pattern. Seq: &gt; = Play/Stop</td></tr>
+            <tr><td>Spice</td><td>Touch strip: set randomization amount</td></tr>
+            <tr><td>Dice</td><td>Touch strip: apply randomization to gates</td></tr>
+            <tr><td>Bend</td><td>Touch strip: pitch bend. Mid=zero. ±12 semi default</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">spice &amp; dice</div>
+        <div class="sb">
+          <table>
+            <tr><td>Spice amt</td><td>Sets how much Dice can deviate gates/oct/vel</td></tr>
+            <tr><td>Dice apply</td><td>Right=more random. Each touch=new baseline</td></tr>
+            <tr><td>Capture</td><td>Shift+A|B to freeze Spice/Dice into sequence</td></tr>
+          </table>
+          <div class="note">Not saved with preset. Requires Arp or Seq active.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">keyboard</div>
+        <div class="sb">
+          <table>
+            <tr><td>Keys</td><td>25 capacitive keys, 2-oct range</td></tr>
+            <tr><td>Pitch range</td><td>C-2 to G8 (±3 oct via Oct buttons)</td></tr>
+            <tr><td>Pressure</td><td>Aftertouch or velocity (Utility&gt;Preset)</td></tr>
+            <tr><td>Oct ↓/↑ btns</td><td>±3 octaves. LED blink = distance from center</td></tr>
+            <tr><td>Shift btn</td><td>Blue: access all secondary functions</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">paraphony</div>
+        <div class="sb">
+          <table>
+            <tr><td>Paraphonic</td><td>4-voice; shared analog filter, ind. digital VCAs</td></tr>
+            <tr><td>Unison</td><td>Shift+Para. Hold Para+Preset enc = spread</td></tr>
+            <tr><td>Chord Mode</td><td>Hold Para + play chord + release + release Para</td></tr>
+            <tr><td>Unison Count</td><td>2–4 voices (Utility&gt;Preset)</td></tr>
+            <tr><td>Spread</td><td>0.001–12.000 (12 = one octave)</td></tr>
+          </table>
+          <div class="note">Type mod affects all voices. Wave/Timbre/Shape mod is per-voice in paraphonic mode.</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">preset management</div>
+        <div class="sb">
+          <table>
+            <tr><td>Slots</td><td>512 total; 1–128 factory, 129–512 user</td></tr>
+            <tr><td>Save</td><td>Press Save → slot → category → name → Save</td></tr>
+            <tr><td>Quick save</td><td>Long press Save → current slot</td></tr>
+            <tr><td>Init reset</td><td>Triple-click Preset enc (not auto-saved)</td></tr>
+            <tr><td>Click to Load</td><td>Off/On: require click vs. scroll-to-load</td></tr>
+          </table>
+          <h4>knob catch modes</h4>
+          <table>
+            <tr><td>Jump</td><td>Value jumps to knob position immediately</td></tr>
+            <tr><td>Hook</td><td>Must sweep past stored value first</td></tr>
+            <tr><td>Scaled</td><td>(default) Increments relative to position</td></tr>
+          </table>
+          <div class="note">Saved: knobs, Seq A+B, 4 mod tracks, Utility&gt;Preset settings, chord, octave. NOT saved: Hold, Spice/Dice.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">rear panel (left to right)</div>
+        <div class="sb">
+          <table>
+            <tr><th>Jack</th><th>Function</th></tr>
+            <tr><td>Headphone</td><td>3.5mm TRS mono. TRRS = Vocoder mic in</td></tr>
+            <tr><td>Line Out</td><td>6.35mm TRS mono, balanced</td></tr>
+            <tr><td>CV Pitch</td><td>3.5mm. 1V/Oct / Hz/V / 1.2V/Oct. 0–10V</td></tr>
+            <tr><td>Gate</td><td>3.5mm. S-Trig / V-Trig 5V / V-Trig 12V</td></tr>
+            <tr><td>Pressure CV</td><td>3.5mm. Vel or pressure. 1–10V range</td></tr>
+            <tr><td>Clock In/Out</td><td>3.5mm. TRS=clk+start; TS=clk. 1/2/24/48PPQ</td></tr>
+            <tr><td>MIDI In/Out</td><td>3.5mm TRS Type A. Grey adapters → 5-pin DIN</td></tr>
+            <tr><td>USB-B</td><td>MIDI class-compliant, MCC, firmware, power</td></tr>
+            <tr><td>DC In</td><td>5.5mm barrel. 5V DC. Use Arturia adapter.</td></tr>
+          </table>
+          <div class="note">CV Pitch out = lowest note of seq step. 10V may clip Eurorack modules.</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">vocoder setup</div>
+        <div class="sb">
+          <table>
+            <tr><td>Mic input</td><td>Headphone TRRS jack (CTIA/AHJ standard)</td></tr>
+            <tr><td>Mic Gain</td><td>−12 to +59 dB or Auto Gain (Utility&gt;Global)</td></tr>
+            <tr><td>Noise Gate</td><td>Off / −30 to −90 dB (default −70 dB)</td></tr>
+            <tr><td>Hiss Mode</td><td>Off / Switched / Pass (Utility&gt;Preset)</td></tr>
+            <tr><td>Osc carrier</td><td>Select Vocoder osc type (type 22)</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <span>Arturia MicroFreak — Firmware 5.0.1</span>
+    <span>Source: Arturia Manual v5.0.0 (July 2023)</span>
+    <span>Page 2 of 6</span>
+  </div>
+</div>
+
+<!-- PAGE 3: OSCILLATOR TYPES -->
+<div class="page" style="break-before:page; page-break-before:always;">
+  <div class="header">
+    <div>
+      <div class="header-title">MicroFreak</div>
+      <div class="header-sub">Arturia · Firmware 5.0.1 · Quick Reference</div>
+    </div>
+    <div style="text-align:right"><div class="header-sub">page 3 of 6 · oscillator types</div></div>
+  </div>
+  <div class="col-row">
+
+    <div class="c66">
+      <div class="section">
+        <div class="sh">oscillator types — wave / timbre / shape (all 22)</div>
+        <div class="sb">
+          <table style="table-layout:fixed;">
+            <tr>
+              <th style="width:4%">#</th>
+              <th style="width:13%">Name</th>
+              <th style="width:28%">Wave</th>
+              <th style="width:27%">Timbre</th>
+              <th style="width:28%">Shape</th>
+            </tr>
+            <tr><td>1</td><td>BasicWaves</td><td>Morph: square→saw→2 saws</td><td>Sym: pulse width / phase</td><td>Sub: sine sub-osc level</td></tr>
+            <tr><td>2</td><td>SuperWave</td><td>Waveform: Saw/Square/Tri/Sine</td><td>Detune between copies</td><td>Volume of detuned copies</td></tr>
+            <tr><td>3</td><td>Wavetable</td><td>Table: 1 of 16 wavetables</td><td>Position: scan 32 cycles</td><td>Chorus amount</td></tr>
+            <tr><td>4</td><td>Harmo</td><td>Content: harmonic richness</td><td>Sculpting: sine↔triangle base</td><td>Chorus amount</td></tr>
+            <tr><td>5</td><td>KarplusStr</td><td>Bow: 0=decay, &gt;0=sustain</td><td>Position: strike point</td><td>Decay: resonator damping</td></tr>
+            <tr><td>6</td><td>V.Analog</td><td>Detune between 2 osc copies</td><td>Shape: pulse→sq→hard sync</td><td>Wave: triangle→saw+notch</td></tr>
+            <tr><td>7</td><td>Waveshaper</td><td>Waveshaper waveform select</td><td>Amount: wavefolder amount</td><td>Asym: waveform asymmetry</td></tr>
+            <tr><td>8</td><td>Two Op.FM</td><td>Ratio: freq ratio osc1/osc2</td><td>Amount: modulation index</td><td>Feedback: osc2 self-mod</td></tr>
+            <tr><td>9</td><td>Formant</td><td>Interval: formant 1/2 ratio</td><td>Formant: formant frequency</td><td>Width/shape of formant</td></tr>
+            <tr><td>10</td><td>Chords</td><td>Type: Oct / 5th / sus4 / m / m7 / m9 / m11 / 6+9 / M9 / M7 / M</td><td>Inv/Transp: chord inversion</td><td>Waveform: strings→wavetable</td></tr>
+            <tr><td>11</td><td>Speech</td><td>Vowels 0–53 / Colors 54 / Nums 70 / Letters 85 / Phonetic 101 / Synth 116</td><td>Shifts formants up/down</td><td>Word: selects word</td></tr>
+            <tr><td>12</td><td>Modal</td><td>Inharm: inharmonicity/material</td><td>Excitation brightness+density</td><td>Decay: damping amount</td></tr>
+            <tr><td>13</td><td>Noise</td><td>Source: particle→white→metallic</td><td>Sample rate reduction/pitch</td><td>Noise→+sine→+tri→+square</td></tr>
+            <tr><td>14</td><td>Bass (NE)</td><td>Saturate: cosine saturation</td><td>Fold: 2-stage wavefold</td><td>Noise: PM noise level</td></tr>
+            <tr><td>15</td><td>Sawx (NE)</td><td>Saw Mod: gain of modulus stage</td><td>Shape: chorus amount</td><td>Noise: PM noise amount</td></tr>
+            <tr><td>16</td><td>Harm (NE)</td><td>Spread: partials (0=unison)</td><td>Rectification of partials</td><td>Noise: PM noise + clip</td></tr>
+            <tr><td>17</td><td>WaveUser</td><td>Table: 1 of 16 user tables</td><td>Position: scan 32 cycles</td><td>Bitdepth: lo-fi reduction</td></tr>
+            <tr><td>18</td><td>Sample</td><td>Start: start point 0–100</td><td>Length: −100=rev to +100=fwd</td><td>Loop: crossfade loop point</td></tr>
+            <tr><td>19</td><td>Scan Grains</td><td>Scan: speed/grain position</td><td>Density: grain rate</td><td>Chaos: random density/pitch</td></tr>
+            <tr><td>20</td><td>Cloud Grains</td><td>Start: grain start position</td><td>Density: grain rate</td><td>Chaos: randomness</td></tr>
+            <tr><td>21</td><td>Hit Grains</td><td>Start: grain start position</td><td>Density: grain rate</td><td>Grain size and envelope</td></tr>
+            <tr><td>22</td><td>Vocoder</td><td>CCW=saw; 11%=pulse; 91–100%=noise</td><td>Freq range (male/female)</td><td>Filter band bandwidth</td></tr>
+          </table>
+          <div class="note">Shift+Type (Sample/Grains): browse samples. NE = Noise Engineering. Cannot modulate Type when Vocoder active. Paraphony disabled in Chords mode.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">osc notes &amp; tips</div>
+        <div class="sb">
+          <table>
+            <tr><td>BasicWaves</td><td>Max resonance → filter self-osc = pure sine</td></tr>
+            <tr><td>Wavetable</td><td>Modulate Wave with LFO for wavesequencing</td></tr>
+            <tr><td>KarplusStr</td><td>Set Bow=0 for pluck; Bow&gt;0 for sustained bow</td></tr>
+            <tr><td>Chords</td><td>Mod Wave with random LFO = random chords</td></tr>
+            <tr><td>Speech</td><td>CC10=category, CC12=timbre, CC13=word</td></tr>
+            <tr><td>Sample</td><td>Shift+Type to browse/select samples</td></tr>
+            <tr><td>V.Analog</td><td>Key/Arp→Wave with scale for voice variations</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">assignable matrix destinations</div>
+        <div class="sb">
+          <div style="font-size:6.5pt; line-height:1.6; color:#444">
+            Glide · Osc Type · Sample · Wave · Timbre · Shape · Filter Cutoff · Filter Res · Env Attack · Env Decay · Env Sustain · Env Filter Amt · LFO Rate · Arp&amp;Seq Rate · CycEnv Rise · CycEnv Fall · CycEnv Hold · CycEnv Amt · Matrix Mod Amount
+          </div>
+          <div class="note">Cannot assign: Master Volume, Shift+Knob params, control/icon buttons.</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">specs</div>
+        <div class="sb">
+          <table>
+            <tr><td>Oscillator</td><td>Digital, 22 models</td></tr>
+            <tr><td>Filter</td><td>Analog 12 dB/oct LP/BP/HP</td></tr>
+            <tr><td>Voices</td><td>1 mono / 4 paraphonic</td></tr>
+            <tr><td>Keyboard</td><td>25 capacitive keys, 2 oct (±3)</td></tr>
+            <tr><td>Presets</td><td>512 slots (128 factory)</td></tr>
+            <tr><td>Seq</td><td>4–64 steps, 2 patterns A/B</td></tr>
+            <tr><td>Matrix</td><td>5 sources × 7 dests = 35 points</td></tr>
+            <tr><td>Power</td><td>5V DC or USB 500mA</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <span>Arturia MicroFreak — Firmware 5.0.1</span>
+    <span>Source: Arturia Manual v5.0.0 (July 2023)</span>
+    <span>Page 3 of 6</span>
+  </div>
+</div>
+
+<!-- PAGE 4: SEQUENCER + ARPEGGIATOR -->
+<div class="page" style="break-before:page; page-break-before:always;">
+  <div class="header">
+    <div>
+      <div class="header-title">MicroFreak</div>
+      <div class="header-sub">Arturia · Firmware 5.0.1 · Quick Reference</div>
+    </div>
+    <div style="text-align:right"><div class="header-sub">page 4 of 6 · sequencer · arpeggiator</div></div>
+  </div>
+  <div class="col-row">
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">arpeggiator</div>
+        <div class="sb">
+          <h4>patterns</h4>
+          <table>
+            <tr><td>Up</td><td>Ascending pitch order</td></tr>
+            <tr><td>Order</td><td>Order notes were pressed</td></tr>
+            <tr><td>Random</td><td>Random order</td></tr>
+            <tr><td>Pattern</td><td>Semi-random; regenerates on note change</td></tr>
+          </table>
+          <h4>controls</h4>
+          <table>
+            <tr><td>Oct|Mod</td><td>Octave range 1–4 (1=held notes only)</td></tr>
+            <tr><td>Rate</td><td>BPM or synced (1/1, 1/2, 1/4, 1/8, 1/16, 1/32+T)</td></tr>
+            <tr><td>Swing</td><td>Shift+Rate enc: 50–75%. Default 50%</td></tr>
+            <tr><td>Hold</td><td>Latch arpeggio</td></tr>
+          </table>
+          <h4>shortcuts</h4>
+          <table>
+            <tr><td>Shift+key (arp playing)</td><td>Transpose arpeggio</td></tr>
+            <tr><td>Shift+Up|A</td><td>Copy arp → Seq A (with Spice/Dice!)</td></tr>
+            <tr><td>Shift+Order|B</td><td>Copy arp → Seq B</td></tr>
+          </table>
+          <div class="note">Oct Up/Down while arping ADDS notes at new octave, does NOT transpose. Arp→Seq is the ONLY way to capture Spice/Dice.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">sequencer</div>
+        <div class="sb">
+          <h4>overview</h4>
+          <table>
+            <tr><td>Patterns</td><td>2 (A and B), shared length 4–64 steps</td></tr>
+            <tr><td>Voices</td><td>Up to 4 voices per step (paraphonic)</td></tr>
+            <tr><td>Mod tracks</td><td>4 tracks per pattern (1 knob per track)</td></tr>
+          </table>
+          <h4>icons when seq active</h4>
+          <table>
+            <tr><td>Hold</td><td>Step rec: tie/rest. Rec: erase at playhead</td></tr>
+            <tr><td>Up|A</td><td>Select / play Sequence A</td></tr>
+            <tr><td>Order|B</td><td>Select / play Sequence B</td></tr>
+            <tr><td>Random|O</td><td>Record (step when stopped; realtime when playing)</td></tr>
+            <tr><td>Pattern|&gt;</td><td>Play / Stop</td></tr>
+          </table>
+          <h4>step-time recording</h4>
+          <table>
+            <tr><td>1.</td><td>Play OFF → press O (Record)</td></tr>
+            <tr><td>2.</td><td>Hold notes → stored. Release → advance step</td></tr>
+            <tr><td>3.</td><td>Hold icon = silent rest (advance)</td></tr>
+            <tr><td>4.</td><td>Note + Hold = tie (copies note to next step)</td></tr>
+            <tr><td>5.</td><td>At last step → auto-switch to Play</td></tr>
+          </table>
+          <h4>real-time recording</h4>
+          <table>
+            <tr><td>Start</td><td>Press &gt;, then O. Or press O while playing</td></tr>
+            <tr><td>Notes</td><td>Overwrites on each loop pass</td></tr>
+            <tr><td>Mod</td><td>Records one loop then auto-stops</td></tr>
+            <tr><td>Erase</td><td>Press Hold during rec = erase at playhead</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">sequencer shortcuts</div>
+        <div class="sb">
+          <table>
+            <tr><td>Shift+Arp|Seq</td><td>Toggle arp ↔ seq</td></tr>
+            <tr><td>Shift+key (playing)</td><td>Transpose sequence</td></tr>
+            <tr><td>Hold A + press B</td><td>Copy Seq A to B</td></tr>
+            <tr><td>Hold B + press A</td><td>Copy Seq B to A</td></tr>
+            <tr><td>Hold A + Hold (1s)</td><td>Clear Sequence A</td></tr>
+            <tr><td>Hold B + Hold (1s)</td><td>Clear Sequence B</td></tr>
+            <tr><td>Shift+A or B</td><td>Undo: reload last-saved pattern</td></tr>
+            <tr><td>Shift+Rate (step rec)</td><td>Change sequence length live</td></tr>
+            <tr><td>Scrub (step rec)</td><td>Turn Rate enc to navigate steps</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">sequence modulation tracks</div>
+        <div class="sb">
+          <table>
+            <tr><td>Count</td><td>4 tracks per pattern; 1 knob per track max</td></tr>
+            <tr><td>Max knobs</td><td>4 different knobs. 5th = "Memory full"</td></tr>
+            <tr><td>Smooth</td><td>Utility&gt;Preset&gt;Seq 1–4 Smooth (slew)</td></tr>
+          </table>
+          <h4>clear mod tracks</h4>
+          <table>
+            <tr><td>Oct|Mod (repeat)</td><td>Cycle to target track (LED blinks)</td></tr>
+            <tr><td>Hold Oct|Mod + Hold</td><td>Erase current track. Repeat to clear all</td></tr>
+          </table>
+          <div class="note">Step-time mod tracks default to Smooth OFF. Real-time defaults to Smooth ON.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <span>Arturia MicroFreak — Firmware 5.0.1</span>
+    <span>Source: Arturia Manual v5.0.0 (July 2023)</span>
+    <span>Page 4 of 6</span>
+  </div>
+</div>
+
+<!-- PAGE 5: MODULATION MATRIX + MIDI/CV -->
+<div class="page" style="break-before:page; page-break-before:always;">
+  <div class="header">
+    <div>
+      <div class="header-title">MicroFreak</div>
+      <div class="header-sub">Arturia · Firmware 5.0.1 · Quick Reference</div>
+    </div>
+    <div style="text-align:right"><div class="header-sub">page 5 of 6 · matrix · midi · cv</div></div>
+  </div>
+  <div class="col-row">
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">modulation matrix (5×7 = 35 points)</div>
+        <div class="sb">
+          <h4>sources (rows 1–5)</h4>
+          <table>
+            <tr><td>1: CycEnv</td><td>Cycling Envelope output</td></tr>
+            <tr><td>2: ENV</td><td>Standard Envelope output</td></tr>
+            <tr><td>3: LFO</td><td>LFO output</td></tr>
+            <tr><td>4: Pressure</td><td>Keyboard pressure or velocity</td></tr>
+            <tr><td>5: Key/Arp</td><td>Keyboard pitch, arp, and sequencer</td></tr>
+          </table>
+          <h4>destinations (cols 1–7)</h4>
+          <table>
+            <tr><td>1: Pitch · 2: Wave · 3: Timbre · 4: Cutoff</td><td>Hardwired</td></tr>
+            <tr><td>5: Assign 1 · 6: Assign 2 · 7: Assign 3</td><td>User-assignable</td></tr>
+          </table>
+          <h4>matrix encoder operations</h4>
+          <table>
+            <tr><td>Turn</td><td>Navigate all 35 patch points</td></tr>
+            <tr><td>Press</td><td>Enter edit mode; turn = set amt −100 to +100</td></tr>
+            <tr><td>Hold 0.5s</td><td>Reset current point to 0</td></tr>
+            <tr><td>Shift+long press</td><td>Reset ALL routings to 0</td></tr>
+          </table>
+          <h4>assigning destinations</h4>
+          <table>
+            <tr><td>All rows</td><td>Hold AssignX + turn target knob</td></tr>
+            <tr><td>One row</td><td>Nav to crossing → press enc → hold AssignX → turn knob</td></tr>
+            <tr><td>Meta-mod</td><td>Hold AssignX → move Matrix enc to target routing → press enc</td></tr>
+          </table>
+          <div class="note">LED: OFF=no routing/0 · ON=active · Blinking=selected for edit</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">MIDI CC# reference</div>
+        <div class="sb">
+          <table>
+            <tr><th>CC#</th><th>Parameter</th></tr>
+            <tr><td>2</td><td>Spice</td></tr>
+            <tr><td>5</td><td>Glide</td></tr>
+            <tr><td>9</td><td>Oscillator Type</td></tr>
+            <tr><td>10</td><td>Oscillator Wave</td></tr>
+            <tr><td>12</td><td>Oscillator Timbre</td></tr>
+            <tr><td>13</td><td>Oscillator Shape</td></tr>
+            <tr><td>23</td><td>Filter Cutoff</td></tr>
+            <tr><td>24</td><td>Cycling Env Amount</td></tr>
+            <tr><td>26</td><td>Filter/Env Amount</td></tr>
+            <tr><td>28</td><td>Cycling Env Hold</td></tr>
+            <tr><td>29</td><td>Envelope Sustain</td></tr>
+            <tr><td>64</td><td>Keyboard Hold (toggle)</td></tr>
+            <tr><td>83</td><td>Filter Resonance</td></tr>
+            <tr><td>91</td><td>Arp/Seq Rate (free)</td></tr>
+            <tr><td>92</td><td>Arp/Seq Rate (sync)</td></tr>
+            <tr><td>93</td><td>LFO Rate (free)</td></tr>
+            <tr><td>94</td><td>LFO Rate (sync)</td></tr>
+            <tr><td>102</td><td>Cycling Env Rise</td></tr>
+            <tr><td>103</td><td>Cycling Env Fall</td></tr>
+            <tr><td>105</td><td>Envelope Attack</td></tr>
+            <tr><td>106</td><td>Envelope Decay</td></tr>
+          </table>
+          <div class="note">Speech: CC10=category · CC12=timbre · CC13=word. All CC 0–127.</div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">MIDI settings (Utility&gt;Global&gt;MIDI)</div>
+        <div class="sb">
+          <table>
+            <tr><td>Input Chan</td><td>All / 1–16 / None</td></tr>
+            <tr><td>Output Chan</td><td>1–16</td></tr>
+            <tr><td>Output Dest</td><td>None / USB / MIDI / Both</td></tr>
+            <tr><td>Local</td><td>On=engine; Off=MIDI only (DAW)</td></tr>
+            <tr><td>Arp/Seq Out</td><td>Off / On</td></tr>
+            <tr><td>Thru</td><td>Off / On (MIDI In → Out)</td></tr>
+            <tr><td>Knob Send CC</td><td>Off / On</td></tr>
+            <tr><td>Merge</td><td>USB+KBD / MIDI+KBD / BOTH+KBD</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">sync &amp; CV/Gate (Utility&gt;Global)</div>
+        <div class="sb">
+          <h4>sync</h4>
+          <table>
+            <tr><td>Source</td><td>Int / USB / MIDI / Clock / Auto</td></tr>
+            <tr><td>Clock</td><td>1step / 2PPQ / 24PPQ / 48PPQ</td></tr>
+            <tr><td>Global Tempo</td><td>Off / On (ignore per-preset tempo)</td></tr>
+          </table>
+          <h4>CV/Gate</h4>
+          <table>
+            <tr><td>Pitch Format</td><td>1V/Oct (def) / Hz/V / 1.2V/Oct (Buchla)</td></tr>
+            <tr><td>Gate Format</td><td>S-Trig / V-Trig 5V / V-Trig 12V</td></tr>
+            <tr><td>Pressure Range</td><td>1V–10V configurable</td></tr>
+            <tr><td>0V Reference</td><td>C-1 to G8 (for 1V/Oct)</td></tr>
+            <tr><td>1V Reference</td><td>C-1 to G8 (for Hz/V)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">global settings (Utility&gt;Global)</div>
+        <div class="sb">
+          <h4>controls</h4>
+          <table>
+            <tr><td>Knob Catch</td><td>Jump / Hook / Scaled (default)</td></tr>
+            <tr><td>Click to Load</td><td>Off / On</td></tr>
+            <tr><td>Osc Knob Speed</td><td>Slow (default) / Fast</td></tr>
+            <tr><td>KBD Sensitivity</td><td>10%–100%</td></tr>
+            <tr><td>AT Curve</td><td>Lin / Log / Exp</td></tr>
+            <tr><td>Vel Curve</td><td>Lin / Log / Exp</td></tr>
+            <tr><td>Relative Bend</td><td>Off / On (first touch = zero ref)</td></tr>
+          </table>
+          <h4>tuning, scale &amp; misc</h4>
+          <table>
+            <tr><td>Cent Offset</td><td>−50 to +50 cents</td></tr>
+            <tr><td>A Reference</td><td>427.47–453.89 Hz</td></tr>
+            <tr><td>Scale</td><td>off/major/minor/harmominor/dorian/mixolydian/blues/penta</td></tr>
+            <tr><td>Root Note</td><td>C – B</td></tr>
+            <tr><td>Mem Protect</td><td>Off / Factory Only / On</td></tr>
+            <tr><td>Reset</td><td>Yes = factory reset (erases all)</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <span>Arturia MicroFreak — Firmware 5.0.1</span>
+    <span>Source: Arturia Manual v5.0.0 (July 2023)</span>
+    <span>Page 5 of 6</span>
+  </div>
+</div>
+
+<!-- PAGE 6: PRESET SETTINGS + SHORTCUTS -->
+<div class="page" style="break-before:page; page-break-before:always;">
+  <div class="header">
+    <div>
+      <div class="header-title">MicroFreak</div>
+      <div class="header-sub">Arturia · Firmware 5.0.1 · Quick Reference</div>
+    </div>
+    <div style="text-align:right"><div class="header-sub">page 6 of 6 · preset settings · shortcuts · tips</div></div>
+  </div>
+  <div class="col-row">
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">preset settings (Utility&gt;Preset)</div>
+        <div class="sb">
+          <h4>voice</h4>
+          <table>
+            <tr><td>Bend Range</td><td>0–24 semitones (0–2 octaves from center)</td></tr>
+            <tr><td>Glide Mode</td><td>Time / Sync / Rate</td></tr>
+            <tr><td>Unison Spread</td><td>0.001–12.000 (12 = one octave)</td></tr>
+            <tr><td>Unison Count</td><td>2–4 voices</td></tr>
+          </table>
+          <h4>modulations</h4>
+          <table>
+            <tr><td>Env Legato</td><td>Off / On (no retrigger on legato)</td></tr>
+            <tr><td>Env Snap</td><td>Off / On (sharper decay)</td></tr>
+            <tr><td>LFO Retrig</td><td>Off / On / Legato</td></tr>
+            <tr><td>Press Mode</td><td>Aftertouch / Velocity</td></tr>
+            <tr><td>Key/Arp Mode</td><td>Linear / Random</td></tr>
+            <tr><td>Velo Amp Mod</td><td>0–10 (velocity → volume)</td></tr>
+            <tr><td>Preset Volume</td><td>−12 to +12 dB</td></tr>
+          </table>
+          <h4>seq/arp</h4>
+          <table>
+            <tr><td>Seq Length</td><td>4–64 steps</td></tr>
+            <tr><td>Default Gate</td><td>10–90% (default 50%)</td></tr>
+            <tr><td>Seq 1–4 Smooth</td><td>Off / On (slew per mod track)</td></tr>
+          </table>
+          <h4>per-preset scale</h4>
+          <table>
+            <tr><td>Scale</td><td>global/off/major/minor/harmominor/dorian/mixolydian/blues/penta</td></tr>
+            <tr><td>Root Note</td><td>C – B</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">key shortcuts</div>
+        <div class="sb">
+          <h4>preset</h4>
+          <table>
+            <tr><td>Long press Save</td><td>Quick save to current slot</td></tr>
+            <tr><td>Triple-click Preset enc</td><td>Reset to Init (not saved)</td></tr>
+            <tr><td>Shift+turn enc (name)</td><td>Fast scroll A/a/0/. ranges</td></tr>
+            <tr><td>Push+turn enc (name)</td><td>Edit char without advancing</td></tr>
+          </table>
+          <h4>oscillator</h4>
+          <table>
+            <tr><td>Shift+Wave/Timbre/Shape</td><td>Reverse knob speed</td></tr>
+            <tr><td>Shift+Type (sample osc)</td><td>Browse and select samples</td></tr>
+          </table>
+          <h4>cycling envelope</h4>
+          <table>
+            <tr><td>Shift+Rise</td><td>Rise curve: log → linear → exp</td></tr>
+            <tr><td>Shift+Fall</td><td>Fall curve: log → linear → exp</td></tr>
+          </table>
+          <h4>matrix</h4>
+          <table>
+            <tr><td>Hold enc 0.5s</td><td>Reset current point to 0</td></tr>
+            <tr><td>Shift+long press enc</td><td>Clear ALL matrix routings</td></tr>
+            <tr><td>Hold Assign1+knob</td><td>Assign all 5 sources → col 5</td></tr>
+            <tr><td>Hold Assign2+knob</td><td>Assign all 5 sources → col 6</td></tr>
+            <tr><td>Hold Assign3+knob</td><td>Assign all 5 sources → col 7</td></tr>
+            <tr><td>Hold Assign+Para btn</td><td>Assign Unison Spread as dest</td></tr>
+          </table>
+          <h4>paraphony</h4>
+          <table>
+            <tr><td>Shift+Paraphonic</td><td>Activate Unison mode</td></tr>
+            <tr><td>Hold Para+Preset enc</td><td>Adjust Unison Spread</td></tr>
+            <tr><td>Hold Para+chord+release</td><td>Enter Paraphonic Chord Mode</td></tr>
+            <tr><td>Press Para (chord mode)</td><td>Exit Chord Mode</td></tr>
+          </table>
+          <h4>rates</h4>
+          <table>
+            <tr><td>Press LFO Rate enc</td><td>Toggle LFO sync</td></tr>
+            <tr><td>Press Arp Rate enc</td><td>Toggle Arp/Seq sync</td></tr>
+            <tr><td>Shift+Rate enc</td><td>Set swing 50–75%</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="c33">
+      <div class="section">
+        <div class="sh">pro tips</div>
+        <div class="sb">
+          <table class="plain">
+            <tr><td><strong>Filter self-osc:</strong> Resonance max on BPF/HPF → pure sine, blocks osc. Use as extra oscillator.</td></tr>
+            <tr><td><strong>Audio-rate LFO:</strong> LFO at 100 Hz → Pitch via matrix = FM-style harmonics.</td></tr>
+            <tr><td><strong>Complex envs:</strong> CycEnv (LOOP) → Env Attack/Decay = evolving ADSR. CycEnv → its own Amount = circular self-mod.</td></tr>
+            <tr><td><strong>Freeze Spice/Dice:</strong> Set Arp + Spice/Dice, then Shift+A or B to freeze into sequence permanently.</td></tr>
+            <tr><td><strong>Chord progressions:</strong> Chords osc + Key/Arp→Wave (Random mode) = auto-harmonization.</td></tr>
+            <tr><td><strong>Paraphonic + Seq:</strong> Hold 2 keyboard notes → seq uses remaining 2 voices for countermelody.</td></tr>
+            <tr><td><strong>DAW integration:</strong> Local OFF → keys/knobs → MIDI only → DAW sends back. No double-triggering.</td></tr>
+            <tr><td><strong>Meta-modulation:</strong> Use CycEnv to modulate the amount of LFO→Pitch for vibrato depth control.</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="sh">global scale modes</div>
+        <div class="sb">
+          <table>
+            <tr><th>Scale</th><th>Notes (from C)</th></tr>
+            <tr><td>Major</td><td>C D E F G A B</td></tr>
+            <tr><td>Minor</td><td>C D Eb F G Ab Bb</td></tr>
+            <tr><td>Harm Minor</td><td>C D Eb F G Ab B</td></tr>
+            <tr><td>Dorian</td><td>C D Eb F G A Bb</td></tr>
+            <tr><td>Mixolydian</td><td>C D E F G A Bb</td></tr>
+            <tr><td>Blues</td><td>C D Eb F Gb G Ab Bb</td></tr>
+            <tr><td>Pentatonic</td><td>C D E G A</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <span>Arturia MicroFreak — Firmware 5.0.1</span>
+    <span>Source: Arturia Manual v5.0.0 (July 2023)</span>
+    <span>Page 6 of 6</span>
+  </div>
+</div>
+
+</body>
+</html>

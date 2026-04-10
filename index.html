@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cheat sheets — teenage engineering &amp; more</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #141414;
+      --bg3: #1e1e1e;
+      --border: #2a2a2a;
+      --border2: #3a3a3a;
+      --text: #e8e8e8;
+      --text2: #888;
+      --text3: #555;
+      --accent: #d4d0c4;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'IBM Plex Mono', monospace;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    /* ── LAYOUT ── */
+    .site-header {
+      padding: 48px 40px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-header h1 {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: lowercase;
+      color: var(--text2);
+    }
+
+    .site-header .wordmark {
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1;
+      margin-top: 8px;
+    }
+
+    .site-header .sub {
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      margin-top: 6px;
+    }
+
+    main {
+      padding: 40px 40px 80px;
+      max-width: 1400px;
+    }
+
+    .category {
+      margin-bottom: 48px;
+    }
+
+    .cat-label {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text3);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .card {
+      width: 168px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.12s;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .card:hover {
+      border-color: var(--border2);
+      transform: translateY(-1px);
+    }
+
+    .card:active {
+      transform: translateY(0);
+    }
+
+    .card-color {
+      height: 5px;
+    }
+
+    .card-body {
+      padding: 14px 14px 12px;
+    }
+
+    .card-name {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .card-desc {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--text3);
+      margin-top: 4px;
+      text-transform: lowercase;
+      line-height: 1.4;
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 14px 12px;
+    }
+
+    .btn-view {
+      flex: 1;
+      padding: 5px 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: lowercase;
+      background: transparent;
+      color: var(--text2);
+      border: 1px solid var(--border2);
+      cursor: pointer;
+      transition: background 0.1s, color 0.1s, border-color 0.1s;
+      text-align: center;
+    }
+
+    .btn-view:hover {
+      background: var(--bg3);
+      color: var(--text);
+      border-color: var(--border2);
+    }
+
+    .btn-dl {
+      padding: 5px 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      background: transparent;
+      color: var(--text3);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: color 0.1s, border-color 0.1s;
+      text-decoration: none;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    .btn-dl:hover {
+      color: var(--text2);
+      border-color: var(--border2);
+    }
+
+    /* No-PDF state */
+    .btn-dl[data-nopdf] {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .btn-docs {
+      display: block;
+      padding: 4px 14px 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--text3);
+      text-decoration: none;
+      border-top: 1px solid var(--border);
+      transition: color 0.1s;
+    }
+
+    .btn-docs:hover {
+      color: var(--text2);
+    }
+
+    .btn-docs::before {
+      content: '↗ ';
+    }
+
+    /* ── VIEWER OVERLAY ── */
+    #viewer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: var(--bg);
+      flex-direction: column;
+    }
+
+    #viewer.open {
+      display: flex;
+    }
+
+    #viewer-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 20px;
+      height: 44px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      background: var(--bg2);
+    }
+
+    #viewer-color {
+      width: 10px;
+      height: 10px;
+      flex-shrink: 0;
+    }
+
+    #viewer-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      flex: 1;
+    }
+
+    #viewer-desc {
+      font-size: 9px;
+      color: var(--text3);
+      letter-spacing: 0.06em;
+    }
+
+    #viewer-docs {
+      padding: 6px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      color: var(--text3);
+      border: 1px solid var(--border);
+      background: transparent;
+      text-decoration: none;
+      display: inline-block;
+      transition: color 0.1s, border-color 0.1s;
+    }
+
+    #viewer-docs:hover {
+      color: var(--text2);
+      border-color: var(--border2);
+    }
+
+    #viewer-dl {
+      padding: 6px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: lowercase;
+      color: var(--text2);
+      border: 1px solid var(--border2);
+      background: transparent;
+      text-decoration: none;
+      display: inline-block;
+      transition: color 0.1s, border-color 0.1s;
+    }
+
+    #viewer-dl:hover {
+      color: var(--text);
+      border-color: #555;
+    }
+
+    #viewer-dl[data-nopdf] {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    #viewer-close {
+      padding: 6px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: lowercase;
+      color: var(--text3);
+      border: 1px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      transition: color 0.1s;
+    }
+
+    #viewer-close:hover {
+      color: var(--text);
+      border-color: var(--border2);
+    }
+
+    #viewer-frame {
+      flex: 1;
+      border: none;
+      background: #fff;
+    }
+
+    /* ── INTRO ── */
+    .intro {
+      padding: 32px 40px;
+      border-bottom: 1px solid var(--border);
+      max-width: 760px;
+    }
+
+    .intro p {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--text2);
+      line-height: 1.9;
+      letter-spacing: 0.02em;
+    }
+
+    .intro p + p {
+      margin-top: 10px;
+    }
+
+    .intro strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 40px;
+      font-size: 9px;
+      color: var(--text3);
+      letter-spacing: 0.08em;
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wordmark">cheat sheets</div>
+    <div class="sub">teenage engineering · arturia · reference cards</div>
+  </header>
+
+  <div class="intro">
+    <p>
+      <strong>quick-reference cheat sheets</strong> for teenage engineering pocket operators, ep series samplers, and more.
+      each sheet condenses the full product manual into a dense, print-ready two-page layout —
+      controls, shortcuts, effects, sync modes, and workflow tips in one place.
+    </p>
+    <p>
+      click any card to view the sheet in your browser, or download the pdf to print and keep with your gear.
+      links to the official teenage engineering documentation are on each card.
+    </p>
+  </div>
+
+  <main>
+
+    <!-- EP SERIES -->
+    <div class="category">
+      <div class="cat-label">ep series</div>
+      <div class="card-grid">
+
+        <div class="card" onclick="openViewer('ep-master-cheatsheet.html','ep series — all models','ep-40 · ep-1320 · ep-133 comparison','ep-master-cheatsheet.pdf','#1e3058','https://teenage.engineering/guides')">
+          <div class="card-color" style="background:#1e3058"></div>
+          <div class="card-body">
+            <div class="card-name">ep master</div>
+            <div class="card-desc">all models · comparison</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="ep-master-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides" target="_blank" rel="noopener" onclick="event.stopPropagation()">te guides index</a>
+        </div>
+
+        <div class="card" onclick="openViewer('ep40-cheatsheet.html','ep-40 riddim','sampler · 16 pads · effects · midi','ep40-cheatsheet.pdf','#00503a','https://teenage.engineering/guides/ep-40')">
+          <div class="card-color" style="background:#00503a"></div>
+          <div class="card-body">
+            <div class="card-name">ep-40</div>
+            <div class="card-desc">riddim · sampler</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="ep40-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/ep-40" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+        <div class="card" onclick="openViewer('ep1320-cheatsheet.html','ep-1320','sampler · 16 pads · song mode · midi','ep1320-cheatsheet.pdf','#7a2800','https://teenage.engineering/guides/ep-1320')">
+          <div class="card-color" style="background:#7a2800"></div>
+          <div class="card-body">
+            <div class="card-name">ep-1320</div>
+            <div class="card-desc">sampler · 16 pads</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="ep1320-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/ep-1320" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+        <div class="card" onclick="openViewer('ep133-cheatsheet.html','ep-133 k.o. ii','sampler · scenes · fader fx · midi','ep133-cheatsheet.pdf','#c04000','https://teenage.engineering/guides/ep-133')">
+          <div class="card-color" style="background:#c04000"></div>
+          <div class="card-body">
+            <div class="card-name">ep-133</div>
+            <div class="card-desc">k.o. ii · sampler</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="ep133-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/ep-133" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PO SERIES -->
+    <div class="category">
+      <div class="cat-label">pocket operators</div>
+      <div class="card-grid">
+
+        <div class="card" onclick="openViewer('po-master-cheatsheet.html','pocket operators — all models','po-12 through po-35 · full reference','po-master-cheatsheet.pdf','#1e1e1e','https://teenage.engineering/guides')">
+          <div class="card-color" style="background:linear-gradient(90deg,#016837 11%,#005fa0 22%,#d04010 33%,#5c3e9c 44%,#a07800 55%,#c02628 66%,#835b1e 77%,#606060 88%,#0a7a78 100%)"></div>
+          <div class="card-body">
+            <div class="card-name">po master</div>
+            <div class="card-desc">all models · comparison</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="po-master-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides" target="_blank" rel="noopener" onclick="event.stopPropagation()">te guides index</a>
+        </div>
+
+        <div class="card" onclick="openViewer('po12-cheatsheet.html','po-12 rhythm','drum machine · 16 sounds · effects','po12-cheatsheet.pdf','#016837','https://teenage.engineering/guides/po-12/en')">
+          <div class="card-color" style="background:#016837"></div>
+          <div class="card-body">
+            <div class="card-name">po-12</div>
+            <div class="card-desc">rhythm · drums</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="po12-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/po-12/en" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+        <div class="card" onclick="openViewer('po14-cheatsheet.html','po-14 sub','bass synth · 16 sounds · effects','po14-cheatsheet.pdf','#005fa0','https://teenage.engineering/guides/po-14/en')">
+          <div class="card-color" style="background:#005fa0"></div>
+          <div class="card-body">
+            <div class="card-name">po-14</div>
+            <div class="card-desc">sub · bass synth</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="po14-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/po-14/en" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+        <div class="card" onclick="openViewer('po16-cheatsheet.html','po-16 factory','lead synth · 16 sounds · effects','po16-cheatsheet.pdf','#d04010','https://teenage.engineering/guides/po-16/en')">
+          <div class="card-color" style="background:#d04010"></div>
+          <div class="card-body">
+            <div class="card-name">po-16</div>
+            <div class="card-desc">factory · lead synth</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="po16-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/po-16/en" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+        <div class="card" onclick="openViewer('po20-cheatsheet.html','po-20 arcade','arpeggiated synth · 16 sounds · effects','po20-cheatsheet.pdf','#5c3e9c','https://teenage.engineering/guides/po-20/en')">
+          <div class="card-color" style="background:#5c3e9c"></div>
+          <div class="card-body">
+            <div class="card-name">po-20</div>
+            <div class="card-desc">arcade · arpeggiated</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="po20-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/po-20/en" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+        <div class="card" onclick="openViewer('po24-cheatsheet.html','po-24 office','office sounds · 16 patterns · effects','po24-cheatsheet.pdf','#a07800','https://teenage.engineering/guides/po-24/en')">
+          <div class="card-color" style="background:#a07800"></div>
+          <div class="card-body">
+            <div class="card-name">po-24</div>
+            <div class="card-desc">office · samples</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="po24-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/po-24/en" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+        <div class="card" onclick="openViewer('po28-cheatsheet.html','po-28 robot','lead synth · 16 sounds · effects','po28-cheatsheet.pdf','#c02628','https://teenage.engineering/guides/po-28/en')">
+          <div class="card-color" style="background:#c02628"></div>
+          <div class="card-body">
+            <div class="card-name">po-28</div>
+            <div class="card-desc">robot · lead synth</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="po28-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/po-28/en" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+        <div class="card" onclick="openViewer('po32-cheatsheet.html','po-32 tonic','drum synth · 16 sounds · effects','po32-cheatsheet.pdf','#835b1e','https://teenage.engineering/guides/po-32/en')">
+          <div class="card-color" style="background:#835b1e"></div>
+          <div class="card-body">
+            <div class="card-name">po-32</div>
+            <div class="card-desc">tonic · drum synth</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="po32-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/po-32/en" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+        <div class="card" onclick="openViewer('po33-cheatsheet.html','po-33 k.o!','sampler · 8 samples · effects','po33-cheatsheet.pdf','#606060','https://teenage.engineering/guides/po-33/en')">
+          <div class="card-color" style="background:#606060"></div>
+          <div class="card-body">
+            <div class="card-name">po-33</div>
+            <div class="card-desc">k.o! · sampler</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="po33-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/po-33/en" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+        <div class="card" onclick="openViewer('po35-cheatsheet.html','po-35 speak','voice synth · 16 sounds · effects','po35-cheatsheet.pdf','#0a7a78','https://teenage.engineering/guides/po-35/en')">
+          <div class="card-color" style="background:#0a7a78"></div>
+          <div class="card-body">
+            <div class="card-name">po-35</div>
+            <div class="card-desc">speak · voice synth</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view" id="po35-view-btn">view</button>
+            <a class="btn-dl" href="po35-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://teenage.engineering/guides/po-35/en" target="_blank" rel="noopener" onclick="event.stopPropagation()">official guide</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- OTHER -->
+    <div class="category">
+      <div class="cat-label">other</div>
+      <div class="card-grid">
+
+        <div class="card" onclick="openViewer('microfreak-cheatsheet.html','arturia microfreak','hybrid synth · oscillator types · modulations','microfreak-cheatsheet.pdf','#c83200','https://www.arturia.com/products/hardware-synths/microfreak/resources')">
+          <div class="card-color" style="background:#c83200"></div>
+          <div class="card-body">
+            <div class="card-name">microfreak</div>
+            <div class="card-desc">arturia · hybrid synth</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="microfreak-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+          <a class="btn-docs" href="https://www.arturia.com/products/hardware-synths/microfreak/resources" target="_blank" rel="noopener" onclick="event.stopPropagation()">official resources</a>
+        </div>
+
+        <div class="card" onclick="openViewer('piano-chords-cheatsheet.html','piano chord reference','chord voicings · inversions · scales','piano-chords-cheatsheet.pdf','#1a3a6e','')">
+          <div class="card-color" style="background:#1a3a6e"></div>
+          <div class="card-body">
+            <div class="card-name">piano chords</div>
+            <div class="card-desc">chord reference</div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-view">view</button>
+            <a class="btn-dl" href="piano-chords-cheatsheet.pdf" download onclick="event.stopPropagation()">pdf</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    click any card to view · pdf column for download
+  </footer>
+
+  <!-- VIEWER -->
+  <div id="viewer">
+    <div id="viewer-bar">
+      <div id="viewer-color"></div>
+      <div id="viewer-title">—</div>
+      <div id="viewer-desc"></div>
+      <a id="viewer-docs" href="#" target="_blank" rel="noopener">↗ official docs</a>
+      <a id="viewer-dl" href="#" download>↓ download pdf</a>
+      <button id="viewer-close" onclick="closeViewer()">✕ close</button>
+    </div>
+    <iframe id="viewer-frame" src="about:blank"></iframe>
+  </div>
+
+  <script>
+    function openViewer(htmlFile, title, desc, pdfFile, color, docsUrl) {
+      const viewer = document.getElementById('viewer');
+      document.getElementById('viewer-frame').src = htmlFile;
+      document.getElementById('viewer-title').textContent = title;
+      document.getElementById('viewer-desc').textContent = desc;
+      const colorEl = document.getElementById('viewer-color');
+      colorEl.style.background = color;
+      const dlBtn = document.getElementById('viewer-dl');
+      dlBtn.href = pdfFile;
+      dlBtn.download = pdfFile;
+      const docsBtn = document.getElementById('viewer-docs');
+      docsBtn.href = docsUrl || '#';
+      docsBtn.style.display = docsUrl ? 'inline-block' : 'none';
+      viewer.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeViewer() {
+      const viewer = document.getElementById('viewer');
+      viewer.classList.remove('open');
+      document.getElementById('viewer-frame').src = 'about:blank';
+      document.body.style.overflow = '';
+    }
+
+    // Close viewer on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeViewer();
+    });
+
+    // Check if po35 HTML exists; if not, disable view button
+    fetch('po35-cheatsheet.html', { method: 'HEAD' })
+      .catch(() => {
+        const btn = document.getElementById('po35-view-btn');
+        if (btn) {
+          btn.textContent = 'n/a';
+          btn.style.opacity = '0.3';
+          btn.style.pointerEvents = 'none';
+          btn.closest('.card').onclick = null;
+        }
+      });
+  </script>
+
+</body>
+</html>
